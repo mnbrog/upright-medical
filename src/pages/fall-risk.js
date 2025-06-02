@@ -1,7 +1,7 @@
 // File: src/pages/fall-risk.js
 
 import React, { useState, useEffect } from "react"
-import styled, { createGlobalStyle } from "styled-components"
+import styled, { createGlobalStyle, keyframes } from "styled-components"
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 /* 1) GLOBAL STYLES                                                                                                   */
@@ -15,7 +15,7 @@ const GlobalStyles = createGlobalStyle`
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity; /* only snap when near top */
     height: 100%;
   }
 
@@ -61,7 +61,7 @@ const COLORS = {
 /* 3) LAYOUT COMPONENTS                                                                                               */
 /* ----------------------------------------------------------------------------------------------------------------- */
 
-/* 3.1: Sticky navigation bar with logo above nav links */
+/* 3.1: Sticky navigation bar with logo and either four tabs (desktop) or hamburger (mobile) */
 const NavBar = styled.nav`
   position: sticky;
   top: 0;
@@ -72,15 +72,12 @@ const NavBar = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0;
-
-  @media (min-width: 600px) {
-    padding: 1rem 0.5rem;
-  }
+  padding-bottom: 0.5rem;
 `
 
 const LogoWrapper = styled.div`
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 
   a img {
     display: block;
@@ -95,18 +92,23 @@ const LogoWrapper = styled.div`
   }
 `
 
-/* 3.1.1: NavLinks with active‐state styling */
+/* 3.1.1: Desktop version: NavLinks as a 4-column grid, centered under logo */
 const NavLinks = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  max-width: 600px;    /* Constrain to 600px so tabs are perfectly centered */
+  gap: 0;
+  margin-bottom: 0.5rem;
 
   li {
     list-style: none;
+    text-align: center;
   }
 
   a {
+    display: block;
+    padding: 0.75rem 0;
     font-size: 1rem;
     font-weight: 500;
     color: ${COLORS.darkBlue};
@@ -122,22 +124,88 @@ const NavLinks = styled.ul`
     }
   }
 
-  @media (min-width: 600px) {
-    gap: 2rem;
+  /* Mobile: hide the grid version */
+  @media (max-width: 768px) {
+    display: none;
+  }
 
+  /* If the viewport is very narrow, shrink font slightly */
+  @media (max-width: 400px) {
     a {
-      font-size: 1.1rem;
+      font-size: 0.85rem;
+      padding: 0.5rem 0;
     }
   }
 `
 
-/* 3.2: Section container with generous top padding, big bottom margin, and scroll-snap */
+/* 3.1.2: Hamburger icon (mobile only) */
+const Hamburger = styled.button`
+  display: none; /* hidden desktop */
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: ${COLORS.darkBlue};
+  margin-bottom: 0.5rem;
+
+  &:hover {
+    color: ${COLORS.teal};
+  }
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`
+
+/* 3.1.3: Overlay menu animation */
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to   { opacity: 1; }
+`
+const slideDown = keyframes`
+  from { transform: translateY(-20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+`
+
+/* 3.1.4: Mobile overlay menu (full screen) */
+const MobileMenu = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: ${COLORS.cardBg};
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: ${fadeIn} 0.3s ease-in-out;
+
+  a {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: ${COLORS.darkBlue};
+    margin: 1rem 0;
+    opacity: 0;
+    animation: ${slideDown} 0.4s ease-in-out forwards;
+  }
+
+  /* Stagger the link animations */
+  a:nth-child(1) { animation-delay: 0.2s; }
+  a:nth-child(2) { animation-delay: 0.3s; }
+  a:nth-child(3) { animation-delay: 0.4s; }
+  a:nth-child(4) { animation-delay: 0.5s; }
+  a:nth-child(5) { animation-delay: 0.6s; } /* Close button if added here */
+`
+
+/* 3.2: Section container with top padding, bottom margin, and scroll-snap alignment */
 const Section = styled.section`
   scroll-snap-align: start;
-  scroll-margin-top: 160px;
+  scroll-margin-top: 180px;      /* offset to keep title below nav */
   max-width: 960px;
-  margin: 4rem auto 8rem auto;
-  padding: 6rem 1rem 2rem 1rem;
+  margin: 4rem auto 8rem auto;   /* extra top margin on first, big bottom gap */
+  padding: 6rem 1rem 2rem 1rem;   /* top padding so title stays below navbar */
 
   &:first-of-type {
     margin-top: 4rem;
@@ -214,7 +282,7 @@ const BulletList = styled.ul`
 /* 3.8: Hero Section (with video background) */
 const HeroWrapper = styled.section`
   position: relative;
-  height: 70vh;
+  height: 70vh; /* extra breathing room */
   min-height: 450px;
   overflow: hidden;
   display: flex;
@@ -223,7 +291,7 @@ const HeroWrapper = styled.section`
   color: #ffffff;
   text-align: center;
   scroll-snap-align: start;
-  scroll-margin-top: 160px;
+  scroll-margin-top: 180px;
 
   @media (max-width: 768px) {
     height: 60vh;
@@ -289,7 +357,10 @@ const HeroButton = styled.a`
 /* 4) FALL RISK PAGE COMPONENT                                                                                          */
 /* ----------------------------------------------------------------------------------------------------------------- */  
 const FallRiskPage = () => {
+  // track which section is currently visible
   const [activeSection, setActiveSection] = useState("hero")
+  // track whether mobile menu is open
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const sectionIds = ["hero", "need-screen", "what-is-fra", "pboms", "workflow"]
@@ -315,6 +386,16 @@ const FallRiskPage = () => {
     return () => observer.disconnect()
   }, [])
 
+  // Close mobile menu and scroll to section
+  const handleMobileClick = (e, targetId) => {
+    e.preventDefault()
+    setMenuOpen(false)
+    const targetEl = document.getElementById(targetId)
+    if (targetEl) {
+      window.location.hash = `#${targetId}`
+    }
+  }
+
   return (
     <>
       <GlobalStyles />
@@ -322,13 +403,20 @@ const FallRiskPage = () => {
       {/* ──────────────── Navigation Bar ───────────────── */}
       <NavBar>
         <LogoWrapper>
-          <a href="#hero">
+          <a
+            href="#hero"
+            onClick={() => {
+              setMenuOpen(false)
+            }}
+          >
             <img
               src="/images/Upright Medical Solutions Logo.png"
               alt="Upright Medical Solutions"
             />
           </a>
         </LogoWrapper>
+
+        {/* Desktop Links */}
         <NavLinks>
           <li>
             <a
@@ -360,6 +448,45 @@ const FallRiskPage = () => {
             </a>
           </li>
         </NavLinks>
+
+        {/* Mobile Hamburger */}
+        <Hamburger onClick={() => setMenuOpen((prev) => !prev)}>
+          {menuOpen ? "✕" : "☰"}
+        </Hamburger>
+
+        {/* Mobile Overlay Menu */}
+        {menuOpen && (
+          <MobileMenu>
+            <a
+              href="#need-screen"
+              onClick={(e) => handleMobileClick(e, "need-screen")}
+              className={activeSection === "need-screen" ? "active" : ""}
+            >
+              Need to Screen
+            </a>
+            <a
+              href="#what-is-fra"
+              onClick={(e) => handleMobileClick(e, "what-is-fra")}
+              className={activeSection === "what-is-fra" ? "active" : ""}
+            >
+              What Is FRA?
+            </a>
+            <a
+              href="#pboms"
+              onClick={(e) => handleMobileClick(e, "pboms")}
+              className={activeSection === "pboms" ? "active" : ""}
+            >
+              PBOMs
+            </a>
+            <a
+              href="#workflow"
+              onClick={(e) => handleMobileClick(e, "workflow")}
+              className={activeSection === "workflow" ? "active" : ""}
+            >
+              Workflow
+            </a>
+          </MobileMenu>
+        )}
       </NavBar>
 
       {/* ──────────────── Hero / Introduction ───────────────── */}
