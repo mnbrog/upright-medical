@@ -1,0 +1,5 @@
+
+    const cmd = require("C:/Users/mnbro/upright-medical/node_modules/gatsby/dist/commands/develop-process.js");
+    const args = {"_":["develop"],"verbose":false,"no-color":false,"no-colors":false,"noColors":false,"noColor":false,"json":false,"H":"localhost","host":"localhost","p":"8000","port":8000,"c":"","cert-file":"","certFile":"","k":"","key-file":"","keyFile":"","ca-file":"","caFile":"","graphql-tracing":false,"graphqlTracing":false,"$0":"gatsby","directory":"C:\\Users\\mnbro\\upright-medical","browserslist":[">0.25%","not dead"],"sitePackageJson":{"name":"upright-medical","version":"1.0.0","private":true,"dependencies":{"gatsby":"^5.14.3","react":"^18.2.0","react-dom":"^18.2.0","styled-components":"^5.0.0","gatsby-plugin-styled-components":"^6.0.0"},"scripts":{"develop":"gatsby develop","build":"gatsby build","serve":"gatsby serve"}},"report":{"errorMap":{}},"useYarn":false,"proxyPort":8000,"debugInfo":null};
+    cmd(args);
+  
