@@ -61,6 +61,37 @@ export const NavBar = styled.nav`
   padding-bottom: 0.5rem;
 `;
 
+export const Hamburger = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: ${COLORS.darkBlue};
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+
+export const SubIndicator = styled.span`
+  margin-left: 4px;
+  &::after {
+    content: "\25B6";
+    font-size: 0.75rem;
+  }
+`;
+
 export const LogoWrapper = styled.div`
   margin: 1rem 0 0.5rem;
 
@@ -78,74 +109,105 @@ export const LogoWrapper = styled.div`
 `;
 
 export const NavLinks = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  width: 100%;
-  max-width: 800px;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  position: relative;
 
-  li {
+  > li {
     position: relative;
-    text-align: center;
   }
 
-  a {
+  a,
+  button {
     display: block;
-    padding: 0.75rem 0;
+    padding: 0.5rem 0.75rem;
     font-size: 1rem;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
     color: ${COLORS.darkBlue};
     transition: color 0.2s ease-in-out, font-weight 0.2s ease-in-out;
-    cursor: pointer;
+  }
+
+  a:hover,
+  button:hover {
+    background: #f2f4f5;
+    color: ${COLORS.teal};
   }
 
   a.active {
     color: ${COLORS.teal};
     font-weight: 600;
+    text-decoration: underline;
   }
 
-  /* Primary dropdown */
   ul {
     display: none;
     position: absolute;
-    background: ${COLORS.cardBg};
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    z-index: 250;
-    border-radius: 4px;
-  }
-
-  li:hover > ul {
-    display: block;
-  }
-
-  /* Second-level dropdown appears to the right */
-  & > li > ul {
-    left: 100%;
-    top: 0;
-    display: flex;
-  }
-
-  & > li > ul > li {
-    white-space: nowrap;
-    position: relative;
-  }
-
-  /* Third-level dropdown */
-  & > li > ul > li > ul {
-    left: 0;
     top: 100%;
-    display: none;
-    flex-direction: column;
+    left: 0;
     background: ${COLORS.cardBg};
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    min-width: 200px;
+    z-index: 10;
   }
 
-  & > li > ul > li:hover > ul {
+  li:hover > ul,
+  li:focus-within > ul {
     display: block;
   }
 
-  ul li a {
-    padding: 0.5rem 0.75rem;
-    color: ${COLORS.darkBlue};
+  ul li {
+    position: relative;
+    white-space: nowrap;
+  }
+
+  ul li ul {
+    top: 0;
+    left: 100%;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    background: ${COLORS.cardBg};
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    &.open {
+      transform: translateX(0);
+    }
+
+    > li {
+      width: 100%;
+    }
+
+    > li > ul {
+      position: static;
+      box-shadow: none;
+    }
+
+    > li.open > ul {
+      display: block;
+    }
+
+    ul li ul {
+      position: static;
+    }
   }
 `;
 

@@ -1,5 +1,5 @@
-// File: src/components/sections/Hero.jsx
 
+// File: src/components/sections/Hero.jsx
 import React from "react";
 import { HeroVideo, BackgroundVideo, HeroContent, HeroButton } from "../styles";
 

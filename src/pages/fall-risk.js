@@ -50,12 +50,9 @@ const FallRiskPage = () => {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     ids.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) {
-        observer.observe(element);
-      }
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
     });
-
     return () => observer.disconnect();
   }, []);
 
@@ -67,7 +64,7 @@ const FallRiskPage = () => {
       {/* 2) Top navigation bar (passes activeSection so Nav can highlight the correct link) */}
       <Nav active={activeSection} />
 
-      {/* 3) Each “section” has its own component. Make sure each component’s top‐level element has the matching id. */}
+      {/* 3) Each “section” has its own component. Make sure each has the matching id. */}
 
       {/* ───────────── Hero / Introduction ───────────── */}
       <HeroSection id="hero" />
