@@ -279,6 +279,25 @@ const BulletList = styled.ul`
   }
 `
 
+/* 3.7b: Ordered list styling for step-by-step instructions */
+const StepList = styled.ol`
+  margin-left: 1.25rem;
+  margin-bottom: 1.5rem;
+
+  li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+`
+
+/* 3.7c: Sub-heading used within sections */
+const SubTitle = styled.h3`
+  font-size: 1.5rem;
+  color: ${COLORS.darkBlue};
+  margin: 1.5rem 0 1rem;
+  text-align: center;
+`
+
 /* 3.8: Hero Section (with video background) */
 const HeroWrapper = styled.section`
   position: relative;
@@ -570,16 +589,41 @@ const FallRiskPage = () => {
               that outperform traditional screening methods.
             </li>
           </BulletList>
-          <Paragraph>
-            <strong>Step 1: Screen</strong> – Identify existing risk factors using a
-            brief questionnaire.
-            <br />
-            <strong>Step 2: Assess</strong> – Administer 3-5 performance tests in
-            under 25 minutes.
-            <br />
-            <strong>Step 3: Intervene</strong> – Generate a personalized,
-            evidence-based care plan immediately.
-          </Paragraph>
+          <SubTitle>How It Works</SubTitle>
+          <StepList>
+            <li>
+              <strong>Patient Screening:</strong> Patients self-answer
+              questionnaires in the waiting room or at home.
+            </li>
+            <li>
+              <strong>Performance Testing:</strong> A medical assistant
+              administers 3–5 performance tests (Five Time Sit to Stand, Self
+              Paced Walking Test, Single Leg Stance, Timed Up and Go).
+            </li>
+            <li>
+              <strong>Review Report &amp; Care Plan:</strong> Doctor reviews
+              auto-generated FRA report and develops care plan, providing
+              educational materials.
+            </li>
+          </StepList>
+          <BulletList>
+            <li>
+              <strong>Five Time Sit to Stand:</strong> Measures lower-limb
+              strength and balance.
+            </li>
+            <li>
+              <strong>Self Paced Walking Test:</strong> Assesses gait speed and
+              stability.
+            </li>
+            <li>
+              <strong>Single Leg Stance:</strong> Tests static balance on one
+              limb.
+            </li>
+            <li>
+              <strong>Timed Up and Go:</strong> Evaluates dynamic balance and
+              mobility.
+            </li>
+          </BulletList>
         </InfoBox>
       </Section>
 
@@ -615,6 +659,52 @@ const FallRiskPage = () => {
             then runs 3-5 tests—walk speed, sit-to-stand, single-leg stance,
             etc.—and our algorithm does the rest.
           </Paragraph>
+        </InfoBox>
+      </Section>
+
+      {/* ──────────────── Section 3b: Billing & Financial Impact ─────────────── */}
+      <Section id="billing">
+        <SectionTitle>Billing &amp; Financial Impact</SectionTitle>
+        <InfoBox>
+          <SubTitle>Billing Information</SubTitle>
+          <Paragraph>
+            Average procedure reimbursement: $73.48 (range $45–$136). Clients use
+            code CPT 97750 (Physical Performance Test) billed in 15-minute units.
+            Rounding rules: 8 minutes = 1 unit, 23 minutes = 2 units, 38 minutes =
+            3 units. For self-report questionnaire interpretation, use CPT 96160
+            — two questionnaires may be used in the protocol.
+          </Paragraph>
+          <SubTitle>Fall Risk Program Financial Impact</SubTitle>
+          <BulletList>
+            <li>
+              Florida (5 physicians, program 5 days/week, patients 65+ pre- and
+              post-op): 6 months collections: <strong>$138,562</strong>
+            </li>
+            <li>
+              Arkansas (6 PT centers, program 5 days/week, patients 65+): 3
+              months collections: <strong>$176,215</strong>
+            </li>
+            <li>
+              California (1 hospital, program 7 days/week, patients 65+): 3
+              months collections: <strong>$235,178</strong>
+            </li>
+          </BulletList>
+          <SubTitle>Plan of Care &amp; Educational Materials</SubTitle>
+          <Paragraph>
+            Once a patient’s FRA report is complete, the doctor reviews results
+            with the patient, provides a Falls Care Plan, and offers educational
+            materials (e.g., brochures on home modifications, exercise tips).
+          </Paragraph>
+          <img
+            src="PLACEHOLDER_plan_of_care.jpg"
+            alt="Falls Care Plan sample"
+            style={{ maxWidth: "100%", marginBottom: "1rem" }}
+          />
+          <img
+            src="PLACEHOLDER_education.jpg"
+            alt="Educational Materials"
+            style={{ maxWidth: "100%" }}
+          />
         </InfoBox>
       </Section>
 
