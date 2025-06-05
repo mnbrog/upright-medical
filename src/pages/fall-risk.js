@@ -1,3 +1,5 @@
+// File: src/pages/fall-risk.js
+
 import React, { useState, useEffect } from "react"
 import GlobalStyles from "../components/Layout/GlobalStyles"
 import Nav from "../components/Nav"
@@ -15,10 +17,10 @@ import Blog from "../components/sections/Blog"
 import Contact from "../components/sections/Contact"
 
 const FallRiskPage = () => {
-  const [active, setActive] = useState("hero")
+  const [activeSection, setActiveSection] = useState("hero")
 
   useEffect(() => {
-    const ids = [
+    const sectionIds = [
       "hero",
       "products",
       "fra",
@@ -29,38 +31,77 @@ const FallRiskPage = () => {
       "resources",
       "about",
       "blog",
-      "contact"
+      "contact",
     ]
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id)
-        })
-      },
-      { rootMargin: "-40% 0px -60% 0px" }
-    )
-    ids.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-40% 0px -60% 0px",
+      threshold: 0,
+    }
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id)
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions)
+    sectionIds.forEach((id) => {
+      const element = document.getElementById(id)
+      if (element) {
+        observer.observe(element)
+      }
     })
+
     return () => observer.disconnect()
   }, [])
 
   return (
     <>
+      {/* 1) Global CSS + resets */}
       <GlobalStyles />
-      <Nav active={active} />
-      <HeroSection />
-      <ProductsSection />
-      <FallRiskAssessment />
-      <BalanceTraining />
-      <HomeSafety />
-      <Telehealth />
-      <Pulse4Pulse />
-      <Resources />
-      <About />
-      <Blog />
-      <Contact />
+
+      {/* 2) Top navigation bar (passes activeSection so Nav can highlight the correct link) */}
+      <Nav active={activeSection} />
+
+      {/* 3) Each “section” has its own component. Be sure each component sets its top‐level element’s id attribute
+             exactly to the strings we used in the observer list above. */}
+
+      {/* ───────────── Hero / Introduction ───────────── */}
+      <HeroSection id="hero" />
+
+      {/* ───────────── Products overview (just the “Products” landing slice) ───────────── */}
+      <ProductsSection id="products" />
+
+      {/* ───────────── Fall Risk Assessment ───────────── */}
+      <FallRiskAssessment id="fra" />
+
+      {/* ───────────── Balance Training Program ───────────── */}
+      <BalanceTraining id="balance" />
+
+      {/* ───────────── Home Safety Toolkit ───────────── */}
+      <HomeSafety id="safety" />
+
+      {/* ───────────── Telehealth Integration ───────────── */}
+      <Telehealth id="telehealth" />
+
+      {/* ───────────── Pulse4Pulse Cardiovascular Assessment ───────────── */}
+      <Pulse4Pulse id="pulse" />
+
+      {/* ───────────── Resources ───────────── */}
+      <Resources id="resources" />
+
+      {/* ───────────── About Us ───────────── */}
+      <About id="about" />
+
+      {/* ───────────── Blog ───────────── */}
+      <Blog id="blog" />
+
+      {/* ───────────── Contact ───────────── */}
+      <Contact id="contact" />
     </>
   )
 }
