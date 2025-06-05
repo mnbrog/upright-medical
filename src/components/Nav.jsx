@@ -1,3 +1,5 @@
+// File: src/components/Nav.jsx
+
 import React from "react";
 import { NavBar, NavLinks, LogoWrapper } from "./styles";
 
@@ -24,7 +26,7 @@ const Nav = ({ active }) => (
             <a href="#fra">Fall Risk Assessment</a>
             <ul>
               <li>
-                <a href="#fra">Overview & Benefits</a>
+                <a href="#fra">Overview &amp; Benefits</a>
               </li>
               <li>
                 <a href="#fra-how">How It Works</a>
@@ -38,7 +40,7 @@ const Nav = ({ active }) => (
                 <a href="#balance">Key Features</a>
               </li>
               <li>
-                <a href="#balance">Sample Exercises / Video Preview</a>
+                <a href="#balance-video">Sample Exercises / Video Preview</a>
               </li>
             </ul>
           </li>
@@ -57,10 +59,10 @@ const Nav = ({ active }) => (
             <a href="#telehealth">Telehealth Integration</a>
             <ul>
               <li>
-                <a href="#telehealth">Platform Features</a>
+                <a href="#telehealth-features">Platform Features</a>
               </li>
               <li>
-                <a href="#telehealth">Technical Requirements</a>
+                <a href="#telehealth-setup">Technical Requirements</a>
               </li>
             </ul>
           </li>
@@ -68,19 +70,19 @@ const Nav = ({ active }) => (
             <a href="#pulse">Pulse4Pulse Cardiovascular Assessment</a>
             <ul>
               <li>
-                <a href="#pulse">Overview & Mission</a>
+                <a href="#p4p-overview">Overview &amp; Mission</a>
               </li>
               <li>
-                <a href="#pulse">How It Works</a>
+                <a href="#p4p-how">How It Works</a>
               </li>
               <li>
-                <a href="#pulse">Key Tests & Benefits</a>
+                <a href="#key-tests">Key Tests &amp; Benefits</a>
               </li>
               <li>
-                <a href="#pulse">Eligible Conditions</a>
+                <a href="#eligible-conditions">Eligible Conditions</a>
               </li>
               <li>
-                <a href="#pulse">Practice Benefits</a>
+                <a href="#practice-benefits">Practice Benefits</a>
               </li>
             </ul>
           </li>
@@ -92,16 +94,16 @@ const Nav = ({ active }) => (
         </a>
         <ul>
           <li>
-            <a href="#resources">User Guides</a>
+            <a href="#resources-guides">User Guides</a>
           </li>
           <li>
-            <a href="#resources">Troubleshooting FAQs</a>
+            <a href="#resources-faq">Troubleshooting FAQs</a>
           </li>
           <li>
-            <a href="#resources">Infographics</a>
+            <a href="#resources-infographics">Infographics</a>
           </li>
           <li>
-            <a href="#resources">Case Studies</a>
+            <a href="#resources-case-studies">Case Studies</a>
           </li>
         </ul>
       </li>
@@ -111,13 +113,13 @@ const Nav = ({ active }) => (
         </a>
         <ul>
           <li>
-            <a href="#about">Mission & Vision</a>
+            <a href="#about-mission">Mission &amp; Vision</a>
           </li>
           <li>
-            <a href="#about">Leadership Team</a>
+            <a href="#about-team">Leadership Team</a>
           </li>
           <li>
-            <a href="#about">Affiliations</a>
+            <a href="#about-affiliations">Affiliations</a>
           </li>
         </ul>
       </li>
@@ -132,10 +134,10 @@ const Nav = ({ active }) => (
         </a>
         <ul>
           <li>
-            <a href="#contact">Contact Form</a>
+            <a href="#contact-form">Contact Form</a>
           </li>
           <li>
-            <a href="#contact">Request a Demo</a>
+            <a href="#request-demo">Request a Demo</a>
           </li>
         </ul>
       </li>
