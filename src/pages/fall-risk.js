@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react"
 import styled, { createGlobalStyle, keyframes } from "styled-components"
 
 /* ----------------------------------------------------------------------------------------------------------------- */
-/* 1) GLOBAL STYLES                                                                                                   */
+/* 1) GLOBAL STYLES                                                                                                  */
 /* ----------------------------------------------------------------------------------------------------------------- */
 const GlobalStyles = createGlobalStyle`
   *, *::before, *::after {
@@ -47,7 +47,7 @@ const GlobalStyles = createGlobalStyle`
 `
 
 /* ----------------------------------------------------------------------------------------------------------------- */
-/* 2) Color Palette                                                                                                   */
+/* 2) Color Palette                                                                                                  */
 /* ----------------------------------------------------------------------------------------------------------------- */
 const COLORS = {
   darkBlue: "#0A2640",
@@ -58,10 +58,10 @@ const COLORS = {
 }
 
 /* ----------------------------------------------------------------------------------------------------------------- */
-/* 3) LAYOUT COMPONENTS                                                                                               */
+/* 3) LAYOUT COMPONENTS                                                                                              */
 /* ----------------------------------------------------------------------------------------------------------------- */
 
-/* 3.1: Sticky navigation bar with logo and either four tabs (desktop) or hamburger (mobile) */
+/* 3.1: Sticky navigation bar with logo and nested dropdowns (desktop) or hamburger (mobile) */
 const NavBar = styled.nav`
   position: sticky;
   top: 0;
@@ -92,27 +92,28 @@ const LogoWrapper = styled.div`
   }
 `
 
-/* 3.1.1: Desktop version: NavLinks as a 4-column grid, centered under logo */
+/* 3.1.1: Desktop version: NavLinks as a horizontal list with nested dropdowns */
 const NavLinks = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
   width: 100%;
-  max-width: 600px;    /* Constrain to 600px so tabs are perfectly centered */
-  gap: 0;
+  max-width: 960px;
   margin-bottom: 0.5rem;
 
   li {
-    list-style: none;
-    text-align: center;
+    position: relative;
   }
 
   a {
     display: block;
-    padding: 0.75rem 0;
-    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: ${COLORS.darkBlue};
     transition: color 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+    cursor: pointer;
 
     &.active {
       color: ${COLORS.teal};
@@ -124,29 +125,76 @@ const NavLinks = styled.ul`
     }
   }
 
-  /* Mobile: hide the grid version */
+  /* Hide this on mobile */
   @media (max-width: 768px) {
     display: none;
   }
 
-  /* If the viewport is very narrow, shrink font slightly */
   @media (max-width: 400px) {
     a {
-      font-size: 0.85rem;
-      padding: 0.5rem 0;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.6rem;
     }
   }
 `
 
-/* 3.1.2: Hamburger icon (mobile only) */
+const NavItem = styled.li``
+
+/* 3.1.2: Dropdown menu (desktop) */
+const DropdownMenu = styled.ul`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: ${COLORS.cardBg};
+  min-width: 200px;
+  padding: 0.5rem 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  display: none;
+  z-index: 250;
+
+  /* Show when hovering parent NavItem */
+  ${NavItem}:hover & {
+    display: block;
+  }
+
+  li {
+    position: relative;
+
+    &:hover > a {
+      background: ${COLORS.lightGray};
+      color: ${COLORS.teal};
+    }
+
+    /* For nested dropdowns */
+    &:hover > ul {
+      display: block;
+    }
+  }
+
+  a {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: ${COLORS.darkBlue};
+    font-size: 0.85rem;
+  }
+
+  a:hover {
+    background: ${COLORS.lightGray};
+    color: ${COLORS.teal};
+  }
+`
+
+/* 3.1.3: Hamburger icon (mobile only) */
 const Hamburger = styled.button`
   display: none; /* hidden desktop */
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 2.25rem;
   cursor: pointer;
   color: ${COLORS.darkBlue};
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
 
   &:hover {
     color: ${COLORS.teal};
@@ -157,7 +205,7 @@ const Hamburger = styled.button`
   }
 `
 
-/* 3.1.3: Overlay menu animation */
+/* 3.1.4: Mobile overlay menu animation */
 const fadeIn = keyframes`
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -167,7 +215,7 @@ const slideDown = keyframes`
   to   { transform: translateY(0); opacity: 1; }
 `
 
-/* 3.1.4: Mobile overlay menu (full screen) */
+/* 3.1.5: Mobile overlay menu (full screen) */
 const MobileMenu = styled.div`
   position: fixed;
   top: 0;
@@ -178,25 +226,46 @@ const MobileMenu = styled.div`
   z-index: 300;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem;
   animation: ${fadeIn} 0.3s ease-in-out;
 
-  a {
-    font-size: 1.5rem;
-    font-weight: 500;
+  .close-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 2rem;
     color: ${COLORS.darkBlue};
-    margin: 1rem 0;
-    opacity: 0;
-    animation: ${slideDown} 0.4s ease-in-out forwards;
+    cursor: pointer;
+    margin-bottom: 1rem;
+
+    &:hover {
+      color: ${COLORS.teal};
+    }
   }
 
-  /* Stagger the link animations */
-  a:nth-child(1) { animation-delay: 0.2s; }
-  a:nth-child(2) { animation-delay: 0.3s; }
-  a:nth-child(3) { animation-delay: 0.4s; }
-  a:nth-child(4) { animation-delay: 0.5s; }
-  a:nth-child(5) { animation-delay: 0.6s; } /* Close button if added here */
+  a {
+    font-size: 1rem;
+    font-weight: 500;
+    color: ${COLORS.darkBlue};
+    margin: 0.5rem 0;
+    opacity: 0;
+    animation: ${slideDown} 0.35s ease-in-out forwards;
+  }
+
+  /* parent/child/grandchild attributes control staggered animation */
+  a[parent] {
+    animation-delay: 0.2s;
+  }
+  a[child] {
+    animation-delay: 0.4s;
+  }
+  a[grandchild] {
+    animation-delay: 0.6s;
+  }
+  a:last-child {
+    animation-delay: 1s;
+  }
 `
 
 /* 3.2: Section container with top padding, bottom margin, and scroll-snap alignment */
@@ -372,7 +441,7 @@ const HeroButton = styled.a`
 `
 
 /* ----------------------------------------------------------------------------------------------------------------- */
-/* 4) FALL RISK PAGE COMPONENT                                                                                          */
+/* 4) FALL RISK PAGE COMPONENT                                                                                       */
 /* ----------------------------------------------------------------------------------------------------------------- */
 const FallRiskPage = () => {
   // track which section is currently visible
@@ -383,16 +452,28 @@ const FallRiskPage = () => {
   useEffect(() => {
     const sectionIds = [
       "hero",
-      "need-screen",
-      "what-is-fra",
-      "pboms",
-      "billing",
-      "pulse4pulse-overview",
+      "home",
+      "fall-overview",
+      "fall-how",
+      "balance-key",
+      "balance-video",
+      "home-safety",
+      "telehealth-features",
+      "telehealth-setup",
+      "p4p-overview",
+      "p4p-how",
       "key-tests",
       "eligible-conditions",
       "practice-benefits",
-      "specialties",
-      "workflow",
+      "resources-guides",
+      "resources-faq",
+      "resources-infographics",
+      "resources-case-studies",
+      "about-mission",
+      "about-team",
+      "about-affiliations",
+      "blog-section",
+      "contact"
     ]
     const observerOptions = {
       root: null,
@@ -430,15 +511,10 @@ const FallRiskPage = () => {
     <>
       <GlobalStyles />
 
-      {/* ──────────────── Navigation Bar ───────────────── */}
+      {/* ───────────────── Navigation Bar ───────────────── */}
       <NavBar>
         <LogoWrapper>
-          <a
-            href="#hero"
-            onClick={() => {
-              setMenuOpen(false)
-            }}
-          >
+          <a href="#hero" onClick={() => setMenuOpen(false)}>
             <img
               src="/images/Upright Medical Solutions Logo.png"
               alt="Upright Medical Solutions"
@@ -446,92 +522,301 @@ const FallRiskPage = () => {
           </a>
         </LogoWrapper>
 
-        {/* Desktop Links */}
+        {/* Desktop Links (Products is a single top-level dropdown) */}
         <NavLinks>
-          <li>
-            <a
-              href="#need-screen"
-              className={activeSection === "need-screen" ? "active" : ""}
-            >
-              Need to Screen
+          {/* Home */}
+          <NavItem>
+            <a href="#home" className={activeSection === "home" ? "active" : ""}>
+              Home
             </a>
-          </li>
-          <li>
+          </NavItem>
+
+          {/* Products (single parent with nested dropdowns) */}
+          <NavItem>
+            <a>Products</a>
+            <DropdownMenu>
+              {/* Fall Risk Assessment */}
+              <li>
+                <a
+                  className={
+                    ["fall-overview", "fall-how"].includes(activeSection)
+                      ? "active"
+                      : ""
+                  }
+                >
+                  Fall Risk Assessment
+                </a>
+                <DropdownMenu>
+                  <li>
+                    <a
+                      href="#fall-overview"
+                      className={activeSection === "fall-overview" ? "active" : ""}
+                    >
+                      Overview &amp; Benefits
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#fall-how"
+                      className={activeSection === "fall-how" ? "active" : ""}
+                    >
+                      How It Works
+                    </a>
+                  </li>
+                </DropdownMenu>
+              </li>
+
+              {/* Balance Training Program */}
+              <li>
+                <a
+                  className={
+                    ["balance-key", "balance-video"].includes(activeSection)
+                      ? "active"
+                      : ""
+                  }
+                >
+                  Balance Training Program
+                </a>
+                <DropdownMenu>
+                  <li>
+                    <a
+                      href="#balance-key"
+                      className={activeSection === "balance-key" ? "active" : ""}
+                    >
+                      Key Features
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#balance-video"
+                      className={activeSection === "balance-video" ? "active" : ""}
+                    >
+                      Video Preview
+                    </a>
+                  </li>
+                </DropdownMenu>
+              </li>
+
+              {/* Home Safety Toolkit */}
+              <li>
+                <a className={activeSection === "home-safety" ? "active" : ""}>
+                  Home Safety Toolkit
+                </a>
+                <DropdownMenu>
+                  <li>
+                    <a
+                      href="#home-safety"
+                      className={activeSection === "home-safety" ? "active" : ""}
+                    >
+                      PDF Checklist (Download)
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#home-safety"
+                      className={activeSection === "home-safety" ? "active" : ""}
+                    >
+                      Interactive Online Version
+                    </a>
+                  </li>
+                </DropdownMenu>
+              </li>
+
+              {/* Telehealth Integration */}
+              <li>
+                <a
+                  className={
+                    ["telehealth-features", "telehealth-setup"].includes(activeSection)
+                      ? "active"
+                      : ""
+                  }
+                >
+                  Telehealth Integration
+                </a>
+                <DropdownMenu>
+                  <li>
+                    <a
+                      href="#telehealth-features"
+                      className={activeSection === "telehealth-features" ? "active" : ""}
+                    >
+                      Platform Features
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#telehealth-setup"
+                      className={activeSection === "telehealth-setup" ? "active" : ""}
+                    >
+                      Setup Guide
+                    </a>
+                  </li>
+                </DropdownMenu>
+              </li>
+
+              {/* Pulse4Pulse Cardiovascular Assessment */}
+              <li>
+                <a
+                  className={
+                    [
+                      "p4p-overview",
+                      "p4p-how",
+                      "key-tests",
+                      "eligible-conditions",
+                      "practice-benefits",
+                    ].includes(activeSection)
+                      ? "active"
+                      : ""
+                  }
+                >
+                  Pulse4Pulse Cardiovascular Assessment
+                </a>
+                <DropdownMenu>
+                  <li>
+                    <a
+                      href="#p4p-overview"
+                      className={activeSection === "p4p-overview" ? "active" : ""}
+                    >
+                      Overview &amp; Mission
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#p4p-how"
+                      className={activeSection === "p4p-how" ? "active" : ""}
+                    >
+                      How It Works
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#key-tests"
+                      className={activeSection === "key-tests" ? "active" : ""}
+                    >
+                      Key Tests &amp; Benefits
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#eligible-conditions"
+                      className={activeSection === "eligible-conditions" ? "active" : ""}
+                    >
+                      Eligible Conditions
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#practice-benefits"
+                      className={activeSection === "practice-benefits" ? "active" : ""}
+                    >
+                      Practice Benefits
+                    </a>
+                  </li>
+                </DropdownMenu>
+              </li>
+            </DropdownMenu>
+          </NavItem>
+
+          {/* Resources */}
+          <NavItem>
             <a
-              href="#what-is-fra"
-              className={activeSection === "what-is-fra" ? "active" : ""}
-            >
-              What Is FRA?
-            </a>
-          </li>
-          <li>
-            <a
-              href="#pboms"
-              className={activeSection === "pboms" ? "active" : ""}
-            >
-              PBOMs
-            </a>
-          </li>
-          <li>
-            <a
-              href="#billing"
-              className={activeSection === "billing" ? "active" : ""}
-            >
-              Billing
-            </a>
-          </li>
-          <li>
-            <a
-              href="#pulse4pulse-overview"
               className={
-                activeSection === "pulse4pulse-overview" ? "active" : ""
+                ["resources-guides", "resources-faq", "resources-infographics", "resources-case-studies"].includes(
+                  activeSection
+                )
+                  ? "active"
+                  : ""
               }
             >
-              P4P Overview
+              Resources
             </a>
-          </li>
-          <li>
+            <DropdownMenu>
+              <li>
+                <a
+                  href="#resources-guides"
+                  className={activeSection === "resources-guides" ? "active" : ""}
+                >
+                  User Guides
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#resources-faq"
+                  className={activeSection === "resources-faq" ? "active" : ""}
+                >
+                  Troubleshooting FAQs
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#resources-infographics"
+                  className={activeSection === "resources-infographics" ? "active" : ""}
+                >
+                  Infographics
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#resources-case-studies"
+                  className={activeSection === "resources-case-studies" ? "active" : ""}
+                >
+                  Case Studies
+                </a>
+              </li>
+            </DropdownMenu>
+          </NavItem>
+
+          {/* About Us */}
+          <NavItem>
             <a
-              href="#key-tests"
-              className={activeSection === "key-tests" ? "active" : ""}
-            >
-              Key Tests
-            </a>
-          </li>
-          <li>
-            <a
-              href="#eligible-conditions"
               className={
-                activeSection === "eligible-conditions" ? "active" : ""
+                ["about-mission", "about-team", "about-affiliations"].includes(activeSection)
+                  ? "active"
+                  : ""
               }
             >
-              Conditions
+              About Us
             </a>
-          </li>
-          <li>
-            <a
-              href="#practice-benefits"
-              className={activeSection === "practice-benefits" ? "active" : ""}
-            >
-              Benefits
+            <DropdownMenu>
+              <li>
+                <a
+                  href="#about-mission"
+                  className={activeSection === "about-mission" ? "active" : ""}
+                >
+                  Mission &amp; Vision
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#about-team"
+                  className={activeSection === "about-team" ? "active" : ""}
+                >
+                  Leadership Team
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#about-affiliations"
+                  className={activeSection === "about-affiliations" ? "active" : ""}
+                >
+                  Affiliations
+                </a>
+              </li>
+            </DropdownMenu>
+          </NavItem>
+
+          {/* Blog */}
+          <NavItem>
+            <a href="#blog-section" className={activeSection === "blog-section" ? "active" : ""}>
+              Blog
             </a>
-          </li>
-          <li>
-            <a
-              href="#specialties"
-              className={activeSection === "specialties" ? "active" : ""}
-            >
-              Specialties
+          </NavItem>
+
+          {/* Contact */}
+          <NavItem>
+            <a href="#contact" className={activeSection === "contact" ? "active" : ""}>
+              Contact
             </a>
-          </li>
-          <li>
-            <a
-              href="#workflow"
-              className={activeSection === "workflow" ? "active" : ""}
-            >
-              Workflow
-            </a>
-          </li>
+          </NavItem>
         </NavLinks>
 
         {/* Mobile Hamburger */}
@@ -542,87 +827,344 @@ const FallRiskPage = () => {
         {/* Mobile Overlay Menu */}
         {menuOpen && (
           <MobileMenu>
-            <a
-              href="#need-screen"
-              onClick={(e) => handleMobileClick(e, "need-screen")}
-              className={activeSection === "need-screen" ? "active" : ""}
+            <button
+              className="close-btn"
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close Menu"
             >
-              Need to Screen
-            </a>
+              ✕
+            </button>
+
+            {/* Home */}
             <a
-              href="#what-is-fra"
-              onClick={(e) => handleMobileClick(e, "what-is-fra")}
-              className={activeSection === "what-is-fra" ? "active" : ""}
+              href="#home"
+              onClick={(e) => handleMobileClick(e, "home")}
+              parent
+              className={activeSection === "home" ? "active" : ""}
             >
-              What Is FRA?
+              Home
             </a>
+
+            {/* Products Parent */}
+            <a parent className={["fall-overview", "fall-how", "balance-key", "balance-video", "home-safety", "telehealth-features", "telehealth-setup", "p4p-overview", "p4p-how", "key-tests", "eligible-conditions", "practice-benefits"].includes(activeSection) ? "active" : ""}>
+              Products
+            </a>
+
+            {/* ─ Fall Risk Assessment */}
             <a
-              href="#pboms"
-              onClick={(e) => handleMobileClick(e, "pboms")}
-              className={activeSection === "pboms" ? "active" : ""}
+              href="#fall-overview"
+              onClick={(e) => handleMobileClick(e, "fall-overview")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={["fall-overview", "fall-how"].includes(activeSection) ? "active" : ""}
             >
-              PBOMs
+              • Fall Risk Assessment
             </a>
+            {/* ── Overview & Benefits */}
             <a
-              href="#billing"
-              onClick={(e) => handleMobileClick(e, "billing")}
-              className={activeSection === "billing" ? "active" : ""}
+              href="#fall-overview"
+              onClick={(e) => handleMobileClick(e, "fall-overview")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "fall-overview" ? "active" : ""}
             >
-              Billing
+              • Overview &amp; Benefits
             </a>
+            {/* ── How It Works */}
             <a
-              href="#pulse4pulse-overview"
-              onClick={(e) =>
-                handleMobileClick(e, "pulse4pulse-overview")
-              }
+              href="#fall-how"
+              onClick={(e) => handleMobileClick(e, "fall-how")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "fall-how" ? "active" : ""}
+            >
+              • How It Works
+            </a>
+
+            {/* ─ Balance Training Program */}
+            <a
+              href="#balance-key"
+              onClick={(e) => handleMobileClick(e, "balance-key")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={["balance-key", "balance-video"].includes(activeSection) ? "active" : ""}
+            >
+              • Balance Training Program
+            </a>
+            {/* ── Key Features */}
+            <a
+              href="#balance-key"
+              onClick={(e) => handleMobileClick(e, "balance-key")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "balance-key" ? "active" : ""}
+            >
+              • Key Features
+            </a>
+            {/* ── Video Preview */}
+            <a
+              href="#balance-video"
+              onClick={(e) => handleMobileClick(e, "balance-video")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "balance-video" ? "active" : ""}
+            >
+              • Video Preview
+            </a>
+
+            {/* ─ Home Safety Toolkit */}
+            <a
+              href="#home-safety"
+              onClick={(e) => handleMobileClick(e, "home-safety")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={activeSection === "home-safety" ? "active" : ""}
+            >
+              • Home Safety Toolkit
+            </a>
+            {/* ── PDF Checklist */}
+            <a
+              href="#home-safety"
+              onClick={(e) => handleMobileClick(e, "home-safety")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "home-safety" ? "active" : ""}
+            >
+              • PDF Checklist (Download)
+            </a>
+            {/* ── Interactive Online Version */}
+            <a
+              href="#home-safety"
+              onClick={(e) => handleMobileClick(e, "home-safety")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "home-safety" ? "active" : ""}
+            >
+              • Interactive Online Version
+            </a>
+
+            {/* ─ Telehealth Integration */}
+            <a
+              href="#telehealth-features"
+              onClick={(e) => handleMobileClick(e, "telehealth-features")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={["telehealth-features", "telehealth-setup"].includes(activeSection) ? "active" : ""}
+            >
+              • Telehealth Integration
+            </a>
+            {/* ── Platform Features */}
+            <a
+              href="#telehealth-features"
+              onClick={(e) => handleMobileClick(e, "telehealth-features")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "telehealth-features" ? "active" : ""}
+            >
+              • Platform Features
+            </a>
+            {/* ── Setup Guide */}
+            <a
+              href="#telehealth-setup"
+              onClick={(e) => handleMobileClick(e, "telehealth-setup")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "telehealth-setup" ? "active" : ""}
+            >
+              • Setup Guide
+            </a>
+
+            {/* ─ Pulse4Pulse Cardiovascular Assessment */}
+            <a
+              href="#p4p-overview"
+              onClick={(e) => handleMobileClick(e, "p4p-overview")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
               className={
-                activeSection === "pulse4pulse-overview" ? "active" : ""
+                [
+                  "p4p-overview",
+                  "p4p-how",
+                  "key-tests",
+                  "eligible-conditions",
+                  "practice-benefits",
+                ].includes(activeSection)
+                  ? "active"
+                  : ""
               }
             >
-              P4P Overview
+              • Pulse4Pulse Cardiovascular Assessment
             </a>
+            {/* ── Overview & Mission */}
+            <a
+              href="#p4p-overview"
+              onClick={(e) => handleMobileClick(e, "p4p-overview")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "p4p-overview" ? "active" : ""}
+            >
+              • Overview &amp; Mission
+            </a>
+            {/* ── How It Works */}
+            <a
+              href="#p4p-how"
+              onClick={(e) => handleMobileClick(e, "p4p-how")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "p4p-how" ? "active" : ""}
+            >
+              • How It Works
+            </a>
+            {/* ── Key Tests & Benefits */}
             <a
               href="#key-tests"
               onClick={(e) => handleMobileClick(e, "key-tests")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
               className={activeSection === "key-tests" ? "active" : ""}
             >
-              Key Tests
+              • Key Tests &amp; Benefits
             </a>
+            {/* ── Eligible Conditions */}
             <a
               href="#eligible-conditions"
               onClick={(e) => handleMobileClick(e, "eligible-conditions")}
-              className={
-                activeSection === "eligible-conditions" ? "active" : ""
-              }
+              grandchild
+              style={{ paddingLeft: "3rem" }}
+              className={activeSection === "eligible-conditions" ? "active" : ""}
             >
-              Conditions
+              • Eligible Conditions
             </a>
+            {/* ── Practice Benefits */}
             <a
               href="#practice-benefits"
               onClick={(e) => handleMobileClick(e, "practice-benefits")}
+              grandchild
+              style={{ paddingLeft: "3rem" }}
               className={activeSection === "practice-benefits" ? "active" : ""}
             >
-              Benefits
+              • Practice Benefits
             </a>
+
+            {/* Resources */}
             <a
-              href="#specialties"
-              onClick={(e) => handleMobileClick(e, "specialties")}
-              className={activeSection === "specialties" ? "active" : ""}
+              href="#resources-guides"
+              onClick={(e) => handleMobileClick(e, "resources-guides")}
+              parent
+              className={
+                ["resources-guides", "resources-faq", "resources-infographics", "resources-case-studies"].includes(
+                  activeSection
+                )
+                  ? "active"
+                  : ""
+              }
             >
-              Specialties
+              Resources
             </a>
+            {/* ── User Guides */}
             <a
-              href="#workflow"
-              onClick={(e) => handleMobileClick(e, "workflow")}
-              className={activeSection === "workflow" ? "active" : ""}
+              href="#resources-guides"
+              onClick={(e) => handleMobileClick(e, "resources-guides")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={activeSection === "resources-guides" ? "active" : ""}
             >
-              Workflow
+              • User Guides
+            </a>
+            {/* ── Troubleshooting FAQs */}
+            <a
+              href="#resources-faq"
+              onClick={(e) => handleMobileClick(e, "resources-faq")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={activeSection === "resources-faq" ? "active" : ""}
+            >
+              • Troubleshooting FAQs
+            </a>
+            {/* ── Infographics */}
+            <a
+              href="#resources-infographics"
+              onClick={(e) => handleMobileClick(e, "resources-infographics")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={activeSection === "resources-infographics" ? "active" : ""}
+            >
+              • Infographics
+            </a>
+            {/* ── Case Studies */}
+            <a
+              href="#resources-case-studies"
+              onClick={(e) => handleMobileClick(e, "resources-case-studies")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={activeSection === "resources-case-studies" ? "active" : ""}
+            >
+              • Case Studies
+            </a>
+
+            {/* About Us */}
+            <a
+              href="#about-mission"
+              onClick={(e) => handleMobileClick(e, "about-mission")}
+              parent
+              className={["about-mission", "about-team", "about-affiliations"].includes(activeSection) ? "active" : ""}
+            >
+              About Us
+            </a>
+            {/* ── Mission & Vision */}
+            <a
+              href="#about-mission"
+              onClick={(e) => handleMobileClick(e, "about-mission")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={activeSection === "about-mission" ? "active" : ""}
+            >
+              • Mission &amp; Vision
+            </a>
+            {/* ── Leadership Team */}
+            <a
+              href="#about-team"
+              onClick={(e) => handleMobileClick(e, "about-team")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={activeSection === "about-team" ? "active" : ""}
+            >
+              • Leadership Team
+            </a>
+            {/* ── Affiliations */}
+            <a
+              href="#about-affiliations"
+              onClick={(e) => handleMobileClick(e, "about-affiliations")}
+              child
+              style={{ paddingLeft: "1.5rem" }}
+              className={activeSection === "about-affiliations" ? "active" : ""}
+            >
+              • Affiliations
+            </a>
+
+            {/* Blog */}
+            <a
+              href="#blog-section"
+              onClick={(e) => handleMobileClick(e, "blog-section")}
+              parent
+              className={activeSection === "blog-section" ? "active" : ""}
+            >
+              Blog
+            </a>
+
+            {/* Contact */}
+            <a
+              href="#contact"
+              onClick={(e) => handleMobileClick(e, "contact")}
+              parent
+              className={activeSection === "contact" ? "active" : ""}
+            >
+              Contact
             </a>
           </MobileMenu>
         )}
       </NavBar>
 
-      {/* ──────────────── Hero / Introduction ───────────────── */}
+      {/* ───────────────── Hero / Introduction ───────────────── */}
       <HeroWrapper id="hero">
         <BackgroundVideo
           autoPlay
@@ -639,270 +1181,275 @@ const FallRiskPage = () => {
             Prevent Falls.
           </HeroHeadline>
           <HeroSubhead>
-            Solutions to rising insurance costs and health-related employee
-            productivity problems.
+            Innovative Health &amp; Safety Solutions for your practice and patients.
           </HeroSubhead>
-          <HeroButton href="#need-screen">Learn More</HeroButton>
+          <HeroButton href="#home">Learn More</HeroButton>
         </HeroContent>
       </HeroWrapper>
 
-      {/* ──────────────── Section 1: The Need to Screen for Falls ───────────────── */}
-      <Section id="need-screen">
-        <SectionTitle>The Need to Screen for Falls</SectionTitle>
+      {/* ───────────────── Home Section ───────────────── */}
+      <Section id="home">
+        <SectionTitle>Innovative Health &amp; Safety Solutions</SectionTitle>
         <IntroText>
-          For older adults, falls are serious—and costly.
+          We help clinicians implement cutting‐edge screening and training tools to reduce falls,
+          improve balance, ensure home safety, offer telehealth, and deliver turnkey cardiovascular
+          assessments at $0 cost.
         </IntroText>
         <InfoBox>
           <BulletList>
             <li>
-              The CDC STEADI initiative tells healthcare providers to “Screen
-              all patients age 65+ for fall risk.”
+              <strong>Fall Risk Assessment</strong> – Predict a patient’s 12‐month fall probability
+              with minimal clinic time.
             </li>
             <li>
-              Based on American and British Geriatrics Societies’ clinical
-              practice guidelines.
+              <strong>Balance Training Program</strong> – Personalized plans, real‐time feedback,
+              and progress tracking.
             </li>
             <li>
-              Medicare MIPS Measure #318 calls for “Screening for Future Fall
-              Risk” for all patients age 65+.
+              <strong>Home Safety Toolkit</strong> – Downloadable PDF checklist + interactive online
+              version.
             </li>
-            <li>Also covers MIPS #154 and #155.</li>
+            <li>
+              <strong>Telehealth Integration</strong> – Remote assessment &amp; virtual follow‐up.
+            </li>
+            <li>
+              <strong>Pulse4Pulse</strong> – Turnkey cardiovascular wellness service at $0 cost.
+            </li>
           </BulletList>
-          <Paragraph>
-            <strong>Unlock the ability to predict and prevent falls</strong> using
-            our validated Fall Risk Assessment (FRA) technology. Clinicians can
-            quickly identify critical areas of fall risk without lengthy manual
-            evaluation.
-          </Paragraph>
+          <HeroButton href="#contact" style={{ marginTop: "1rem" }}>
+            Get a Demo
+          </HeroButton>
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 2: What Is FRA? ───────────────── */}
-      <Section id="what-is-fra">
-        <SectionTitle>What Is the Fall Risk Assessment (FRA)?</SectionTitle>
+      {/* ───────────────── Products » Fall Risk Assessment ───────────────── */}
+      {/* 4.1: Fall Risk Overview */}
+      <Section id="fall-overview">
+        <SectionTitle>Fall Risk Assessment ― Overview &amp; Benefits</SectionTitle>
         <IntroText>
-          A data-driven, automated assessment that calculates each individual’s
-          12-month probability of falling.
+          Predict each patient’s 12‐month probability of falling using a data‐driven, automated model.
         </IntroText>
         <InfoBox>
           <BulletList>
             <li>
-              <strong>Automated Math:</strong> Combines multiple test results into
-              a single risk score—no manual calculation required.
+              <strong>Automated Math:</strong> Combines multiple performance‐test results into a
+              single risk score—no manual calculation required.
             </li>
             <li>
-              <strong>2,300+ Studies:</strong> Built on extensive clinical
-              research to ensure accuracy.
+              <strong>Built on 2,300+ Studies:</strong> Extensive clinical research ensures accuracy.
             </li>
             <li>
-              <strong>10–25 Minutes:</strong> Simple to administer in any clinic
-              setting, with minimal training.
+              <strong>Quick to Administer:</strong> Only 10–25 minutes in any clinical setting.
             </li>
             <li>
-              <strong>Evidence-Based:</strong> Rooted in peer-reviewed algorithms
-              that outperform traditional screening methods.
+              <strong>Evidence‐Based Algorithm:</strong> Outperforms traditional screening methods.
             </li>
           </BulletList>
-          <SubTitle>How It Works</SubTitle>
+          <img
+            src=""
+            alt="Fall Risk Assessment Device"
+            style={{ width: "100%", height: "200px", background: "#e0e0e0" }}
+          />
+          <p style={{ fontStyle: "italic", marginTop: "0.5rem" }}>
+            {/* Feature image placeholder */}
+            Feature image placeholder: device or assessment in action
+          </p>
+        </InfoBox>
+      </Section>
+
+      {/* 4.2: Fall Risk ― How It Works */}
+      <Section id="fall-how">
+        <SectionTitle>Fall Risk Assessment ― How It Works</SectionTitle>
+        <IntroText>
+          A simple 3‐step process to screen and intervene.
+        </IntroText>
+        <InfoBox>
           <StepList>
             <li>
-              <strong>Patient Screening:</strong> Patients self-answer
-              questionnaires in the waiting room or at home.
+              <strong>Patient Screening:</strong> Self‐answer questionnaires in waiting room or at home.
             </li>
             <li>
-              <strong>Performance Testing:</strong> A medical assistant
-              administers 3–5 performance tests (Five Time Sit to Stand, Self
-              Paced Walking Test, Single Leg Stance, Timed Up and Go).
+              <strong>Performance Testing:</strong> Administer 3–5 tests:
+              <ul>
+                <li>Five Time Sit to Stand</li>
+                <li>Self Paced Walking Test</li>
+                <li>Single Leg Stance</li>
+                <li>Timed Up and Go</li>
+              </ul>
             </li>
             <li>
-              <strong>Review Report &amp; Care Plan:</strong> Doctor reviews
-              auto-generated FRA report and develops care plan, providing
-              educational materials.
+              <strong>Review Report &amp; Care Plan:</strong> Provider reviews auto‐generated FRA report,
+              provides educational materials, and schedules follow‐up.
             </li>
           </StepList>
-          <BulletList>
-            <li>
-              <strong>Five Time Sit to Stand:</strong> Measures lower-limb
-              strength and balance.
-            </li>
-            <li>
-              <strong>Self Paced Walking Test:</strong> Assesses gait speed and
-              stability.
-            </li>
-            <li>
-              <strong>Single Leg Stance:</strong> Tests static balance on one
-              limb.
-            </li>
-            <li>
-              <strong>Timed Up and Go:</strong> Evaluates dynamic balance and
-              mobility.
-            </li>
-          </BulletList>
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 3: PBOMs ───────────────── */}
-      <Section id="pboms">
-        <SectionTitle>Performance-Based Outcome Measures (PBOMs)</SectionTitle>
+      {/* ───────────────── Products » Balance Training Program ───────────────── */}
+      {/* 5.1: Balance Training ― Key Features */}
+      <Section id="balance-key">
+        <SectionTitle>Balance Training Program ― Key Features</SectionTitle>
         <IntroText>
-          These functional tests are the heart of any accurate fall-risk model.
+          Personalized, engaging balance exercises with real‐time feedback and tracking.
         </IntroText>
         <InfoBox>
           <BulletList>
-            <li>
-              <strong>Lusardi et al (2017):</strong> PBOMs are the most powerful
-              predictors of future falls.
-            </li>
-            <li>
-              <strong>Combination Algorithm:</strong> Merges multiple test scores
-              into a composite risk probability.
-            </li>
-            <li>
-              <strong>APTA-SR/3 vs. STEADI:</strong> Demonstrated higher Positive
-              Likelihood Ratio (2.2 vs 1.57) in Parcetich et al (2022).
-            </li>
-            <li>
-              <strong>Minimize False Negatives:</strong> Nithman et al (2019)
-              showed multiple tests reduce missed high-risk patients.
-            </li>
+            <li>Personalized balance exercise plans</li>
+            <li>Real‐time performance feedback</li>
+            <li>Progress tracking &amp; analytics</li>
           </BulletList>
-          <Paragraph>
-            <strong>Quick Clinic Integration:</strong>
-            <br />
-            Patients self-screen via tablet or online form. A medical assistant
-            then runs 3–5 tests (walk speed, sit-to-stand, single-leg stance,
-            etc.) and our algorithm does the rest.
-          </Paragraph>
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 4: Billing & Financial Impact ─────────────── */}
-      <Section id="billing">
-        <SectionTitle>Billing &amp; Financial Impact</SectionTitle>
+      {/* 5.2: Balance Training ― Sample Exercises / Video Preview */}
+      <Section id="balance-video">
+        <SectionTitle>Balance Training Program ― Sample Exercises &amp; Video Preview</SectionTitle>
         <InfoBox>
-          <SubTitle>Billing Information</SubTitle>
-          <Paragraph>
-            Average procedure reimbursement: $73.48 (range $45–$136). Clients use
-            code <strong>CPT 97750</strong> (Physical Performance Test) billed in
-            15-minute units. Rounding rules: 8 minutes = 1 unit, 23 minutes = 2
-            units, 38 minutes = 3 units. For self-report questionnaire
-            interpretation, use <strong>CPT 96160</strong>—two questionnaires may
-            be used in the protocol.
-          </Paragraph>
-          <SubTitle>Fall Risk Program Financial Impact</SubTitle>
-          <BulletList>
-            <li>
-              Florida (5 physicians, program 5 days/week, patients 65+ pre- and
-              post-op): 6 months collections: <strong>$138,562</strong>
-            </li>
-            <li>
-              Arkansas (6 PT centers, program 5 days/week, patients 65+):
-              3 months collections: <strong>$176,215</strong>
-            </li>
-            <li>
-              California (1 hospital, program 7 days/week, patients 65+, surgical
-              patients): 3 months collections: <strong>$235,178</strong>
-            </li>
-          </BulletList>
-          <SubTitle>Plan of Care &amp; Educational Materials</SubTitle>
-          <Paragraph>
-            Once a patient’s FRA report is complete, the doctor reviews results
-            with the patient, provides a Falls Care Plan, and offers educational
-            materials (e.g., brochures on home modifications, exercise tips).
-          </Paragraph>
-          <img
-            src="PLACEHOLDER_plan_of_care.jpg"
-            alt="Falls Care Plan sample"
-            style={{ maxWidth: "100%", marginBottom: "1rem" }}
-          />
-          <img
-            src="PLACEHOLDER_education.jpg"
-            alt="Educational Materials"
-            style={{ maxWidth: "100%" }}
-          />
+          <video controls width="100%" height="200" style={{ background: "#000" }} />
+          <p style={{ fontStyle: "italic", marginTop: "0.5rem" }}>
+            {/* Video preview placeholder */}
+            Video preview placeholder for balance training exercises
+          </p>
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 5: Pulse4Pulse Overview & Mission ───────────────── */}
-      <Section id="pulse4pulse-overview">
+      {/* ───────────────── Products » Home Safety Toolkit ───────────────── */}
+      <Section id="home-safety">
+        <SectionTitle>Home Safety Toolkit</SectionTitle>
+        <InfoBox>
+          <Paragraph>
+            Ensure a safer home environment with our comprehensive safety checklist.
+          </Paragraph>
+          <a
+            href="#"
+            className="button"
+            style={{
+              display: "inline-block",
+              padding: "0.75rem 1.25rem",
+              background: COLORS.teal,
+              color: "#fff",
+              borderRadius: "4px",
+              fontWeight: 600,
+              marginBottom: "1rem",
+            }}
+          >
+            Download Home Safety Checklist (PDF)
+          </a>
+          <p style={{ fontStyle: "italic" }}>
+            {/* Interactive version placeholder */}
+            Placeholder: Interactive home safety checklist UI can be inserted here
+          </p>
+        </InfoBox>
+      </Section>
+
+      {/* ───────────────── Products » Telehealth Integration ───────────────── */}
+      {/* 7.1: Telehealth ― Platform Features */}
+      <Section id="telehealth-features">
+        <SectionTitle>Telehealth Integration ― Platform Features</SectionTitle>
+        <InfoBox style={{ background: "#F0F9FF" }}>
+          <Paragraph>
+            Our telehealth platform seamlessly connects with your practice, enabling remote
+            assessments and consultations. Easy to set up and integrate:
+          </Paragraph>
+          <BulletList>
+            <li>Integrate platform with EHR &amp; scheduling system</li>
+            <li>Train staff on conducting virtual assessments</li>
+            <li>Begin remote monitoring &amp; follow‐up via secure video/data sharing</li>
+          </BulletList>
+        </InfoBox>
+      </Section>
+
+      {/* 7.2: Telehealth ― Technical Requirements / Setup Guide */}
+      <Section id="telehealth-setup">
+        <SectionTitle>Telehealth Integration ― Technical Requirements &amp; Setup Guide</SectionTitle>
+        <InfoBox>
+          <Paragraph>
+            <strong>Requirements:</strong> Standard webcam, stable internet, basic tablet/laptop for patient self‐screening.
+          </Paragraph>
+          <Paragraph>
+            <strong>Setup:</strong>
+            <ul>
+              <li>Install telehealth app/plugin on clinic workstations.</li>
+              <li>Configure HIPAA‐compliant video link.</li>
+              <li>Ensure data sync with EHR for automated documentation.</li>
+            </ul>
+          </Paragraph>
+        </InfoBox>
+      </Section>
+
+      {/* ───────────────── Products » Pulse4Pulse Cardiovascular Assessment ───────────────── */}
+      {/* 8.1: P4P Overview & Mission */}
+      <Section id="p4p-overview">
         <SectionTitle>Pulse4Pulse Overview &amp; Mission</SectionTitle>
         <IntroText>
-          A turnkey cardiovascular wellness assessment service with $0 cost to your practice.
+          Turnkey cardiovascular wellness assessment service at $0 cost to your practice.
         </IntroText>
         <InfoBox>
           <BulletList>
             <li>
-              <strong>FDA-Cleared Device:</strong> Portable, in-office setup with a
-              small footprint. Physicians can quickly evaluate patients for multiple
-              chronic illnesses without referring out.
+              <strong>FDA-Cleared Device:</strong> Portable, in-office setup. No referrals needed.
             </li>
             <li>
-              <strong>60%+ of Adult Patients Qualify:</strong> Detect disease at a
-              microvascular level and prevent catastrophic events.
+              <strong>60%+ of Adult Patients Qualify:</strong> Detect microvascular disease early.
             </li>
             <li>
-              <strong>Real-Time Results:</strong> Three simultaneous tests conducted
-              in 20 minutes by a certified technician—immediate reporting for
-              provider review.
+              <strong>Real-Time Results:</strong> Three simultaneous tests in 20 minutes—instant reporting.
             </li>
             <li>
-              <strong>$0 Cost to Your Practice:</strong> Pulse4Pulse supplies the
-              equipment, certified staff, and billing support—no capital expenditure,
-              no staff training burden.
+              <strong>$0 Cost to Practice:</strong> We supply device, certified staff, and billing support.
             </li>
           </BulletList>
-          <SubTitle>How It Works</SubTitle>
+        </InfoBox>
+      </Section>
+
+      {/* 8.2: P4P How It Works (step-by-step) */}
+      <Section id="p4p-how">
+        <SectionTitle>Pulse4Pulse ― How It Works</SectionTitle>
+        <InfoBox>
           <StepList>
-            <li>Intake Qualification: Patient completes a brief form to identify risk factors.</li>
             <li>
-              On-Site Testing: A Pulse4Pulse medical assistant visits your practice
-              to perform the assessment using a portable, FDA-cleared device.
+              <strong>Intake Qualification:</strong> Patient completes a form to identify clinical risk factors.
             </li>
             <li>
-              Instant Results: Technician provides real-time results and preliminary
-              recommendations to the provider during the same visit.
+              <strong>On-Site Testing:</strong> A P4P medical assistant visits your practice and performs the assessment.
             </li>
             <li>
-              Billing & Support: Pulse4Pulse handles all billing and provides an
-              account manager to ensure smooth program implementation.
+              <strong>Instant Results:</strong> Technician provides real-time results &amp; preliminary recommendations.
+            </li>
+            <li>
+              <strong>Billing &amp; Support:</strong> Pulse4Pulse handles billing and provides an account manager.
             </li>
           </StepList>
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 6: Key Tests & Benefits ───────────────── */}
+      {/* 8.3: P4P Key Tests & Benefits */}
       <Section id="key-tests">
-        <SectionTitle>Key Tests &amp; Benefits</SectionTitle>
+        <SectionTitle>Pulse4Pulse ― Key Tests &amp; Benefits</SectionTitle>
         <InfoBox>
           <BulletList>
             <li>
-              <strong>ANS Testing:</strong> Measures autonomic nervous system
-              function (heart rate variability, adaptability). Utilizes blood
-              pressure cuffs, EKG leads, and P02 sensors during controlled breathing.
+              <strong>ANS Testing:</strong> Measures autonomic function (heart rate variability, adaptability).
             </li>
             <li>
-              <strong>ABI Testing:</strong> Screens for peripheral artery disease by
-              comparing limb blood pressures. Four cuffs and P02 sensors record for
-              two minutes each side.
+              <strong>ABI Testing:</strong> Screens for PAD by comparing limb blood pressures.
             </li>
             <li>
-              <strong>Sudomotor Testing:</strong> Detects early microvascular
-              neuropathy by stimulating sweat glands—early detection of neuropathy.
+              <strong>Sudomotor Testing:</strong> Detects microvascular neuropathy via sweat‐gland stimulation.
             </li>
           </BulletList>
           <Paragraph>
-            All three tests complete within a 20-minute, non-invasive session,
-            producing an easy-to-interpret summary report for the provider.
+            All three tests complete within 20 minutes, non-invasive, with an easy-to-interpret summary report.
           </Paragraph>
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 7: Eligible Conditions ───────────────── */}
+      {/* 8.4: P4P Eligible Conditions */}
       <Section id="eligible-conditions">
-        <SectionTitle>Eligible Conditions</SectionTitle>
+        <SectionTitle>Pulse4Pulse ― Eligible Conditions</SectionTitle>
         <InfoBox>
           <IntroText>
-            Any one condition below determines eligibility for Pulse4Pulse testing:
+            Any one condition below makes a patient eligible for Pulse4Pulse testing:
           </IntroText>
           <BulletList>
             <li>Diabetes</li>
@@ -919,132 +1466,276 @@ const FallRiskPage = () => {
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 8: Practice Benefits ───────────────── */}
+      {/* 8.5: P4P Practice Benefits */}
       <Section id="practice-benefits">
-        <SectionTitle>Practice Benefits</SectionTitle>
+        <SectionTitle>Pulse4Pulse ― Practice Benefits</SectionTitle>
         <InfoBox>
           <BulletList>
             <li>
-              <strong>New Revenue Stream:</strong> Potential for $150k/physician
-              annually; 60% of adult patients qualify for testing.
+              <strong>New Revenue Stream:</strong> Potential for ~$150k/physician annually; 60%+ of adults qualify.
             </li>
             <li>
-              <strong>No Capital Expenditure:</strong> Pulse4Pulse provides device,
-              staffing, and billing—zero startup cost.
+              <strong>No Capital Expenditure:</strong> We provide device, staff, and billing support.
             </li>
             <li>
               <strong>5 Billable Diagnostic Codes:</strong>
               <ul>
-                <li key="code-93923">Ankle Brachial Index (CPT 93923)</li>
-                <li key="code-95921">Autonomic Function (CPT 95921)</li>
-                <li key="code-95923">Sudomotor (CPT 95923)</li>
-                <li key="code-93040">Electrocardiogram (CPT 93040)</li>
-                <li key="code-94761">Pulse Oximetry (CPT 94761)</li>
+                <li>Ankle Brachial Index (CPT 93923)</li>
+                <li>Autonomic Function (CPT 95921)</li>
+                <li>Sudomotor (CPT 95923)</li>
+                <li>Electrocardiogram (CPT 93040)</li>
+                <li>Pulse Oximetry (CPT 94761)</li>
               </ul>
             </li>
             <li>
-              <strong>Enhanced Patient Care:</strong> Early detection of disease
-              indicators leads to timely intervention and improved outcomes.
+              <strong>Enhanced Patient Care:</strong> Early disease detection leads to timely intervention.
             </li>
           </BulletList>
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 9: Applicable Medical Specialties ───────────────── */}
-      <Section id="specialties">
-        <SectionTitle>Applicable Medical Specialties</SectionTitle>
+      {/* ───────────────── Resources ───────────────── */}
+      {/* 9.1: User Guides */}
+      <Section id="resources-guides">
+        <SectionTitle>Resources ― User Guides</SectionTitle>
         <InfoBox>
           <BulletList>
-            <li key="cardiology">
-              <strong>Cardiology:</strong> Diagnose CAD, hypercholesterolemia,
-              hypertension—especially in smokers, stroke history.
+            <li>
+              <a href="#" style={{ color: COLORS.darkBlue, textDecoration: "underline" }}>
+                Fall Prevention Guide (PDF)
+              </a>
             </li>
-            <li key="diabetic-medicine">
-              <strong>Diabetic Medicine:</strong> Diagnose diabetes, neuropathies,
-              PAD.
+            <li>
+              <a href="#" style={{ color: COLORS.darkBlue, textDecoration: "underline" }}>
+                Balance Training Quick-Start (PDF)
+              </a>
             </li>
-            <li key="endocrinology">
-              <strong>Endocrinology:</strong> Wellness tool for diabetes/thyroid/
-              cholesterol issues.
+            <li>
+              <a href="#" style={{ color: COLORS.darkBlue, textDecoration: "underline" }}>
+                Telehealth Setup Manual
+              </a>
             </li>
-            <li key="gastroenterology">
-              <strong>Gastroenterology:</strong> Identify autonomic neuropathies
-              related to IBS, chronic constipation, abdominal pain.
-            </li>
-            <li key="general-practice">
-              <strong>General Practice:</strong> Helps screen 60% of asymptomatic
-              adults for hidden disease.
-            </li>
-            <li key="geriatric">
-              <strong>Geriatric Medicine:</strong> All geriatric patients qualify—
-              elevated ABI pressures over 70 correlate with dementia risk.
-            </li>
-            <li key="neurology">
-              <strong>Neurology:</strong> Quantify neuropathy for objective care
-              planning.
-            </li>
-            <li key="orthopedics-surgery">
-              <strong>Orthopedics &amp; Surgery:</strong> Pre-surgery screening for
-              circulatory and diabetic issues.
-            </li>
-            <li key="pain-management">
-              <strong>Pain Management:</strong> Differentiate vascular vs neuropathic
-              pain for tailored interventions.
-            </li>
-            <li key="pulmonology">
-              <strong>Pulmonology / Sleep Disorders:</strong> COPD and autonomic
-              dysfunction link.
-            </li>
-            <li key="weight-management">
-              <strong>Weight Management:</strong> High rates of diabetes/
-              thyroid/cholesterol in overweight patients.
-            </li>
-            <li key="wound-care-nephrology">
-              <strong>Wound Care / Nephrology:</strong> Screen for PAD in CKD patients
-              with ulcers.
-            </li>
-            <li key="integrative-internal">
-              <strong>Integrative &amp; Internal Medicine:</strong> Wellness tool for
-              asymptomatic screening and root-cause analysis of complex symptom
-              profiles.
-            </li>
-            <li key="urology">
-              <strong>Urology:</strong> Identify vascular causes of sexual dysfunction.
+            <li>
+              <a href="#" style={{ color: COLORS.darkBlue, textDecoration: "underline" }}>
+                Pulse4Pulse Device User Manual
+              </a>
             </li>
           </BulletList>
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 10: Clinic Workflow ───────────────── */}
-      <Section id="workflow">
-        <SectionTitle>Clinic Workflow – Best Practice Example</SectionTitle>
+      {/* 9.2: Troubleshooting FAQs */}
+      <Section id="resources-faq">
+        <SectionTitle>Resources ― Troubleshooting FAQs</SectionTitle>
         <InfoBox>
-          <IntroText>Step 1: Patient Screening</IntroText>
-          <Paragraph>
-            Patients self-answer a brief questionnaire while waiting—captures
-            history, medications, previous falls.
-          </Paragraph>
-
-          <IntroText>Step 2: Performance Testing</IntroText>
-          <Paragraph>
-            Patient is escorted down the hallway for a 10-meter walk test. A
-            physician assistant or MA administers remaining tests in the exam
-            room.
-          </Paragraph>
-
-          <IntroText>Step 3: Report &amp; Care Plan</IntroText>
-          <Paragraph>
-            Within seconds, the FRA engine generates a risk report and tailored
-            interventions. The clinician reviews results, provides educational
-            materials, and schedules follow-up.
-          </Paragraph>
-
-          <IntroText>Financial Impact / Case Studies</IntroText>
           <BulletList>
-            <li key="case-fl"><strong>Florida (5 Physicians):</strong> 6 months collections – $138,562.</li>
-            <li key="case-ar"><strong>Arkansas (6 PT Centers):</strong> 3 months collections – $176,215.</li>
-            <li key="case-ca"><strong>California (1 Hospital):</strong> 3 months collections – $235,178.</li>
+            <li>
+              <strong>Fall Risk Assessment:</strong> “Device won’t calibrate” | “Incomplete test data”
+            </li>
+            <li>
+              <strong>Balance Training:</strong> “Video preview not loading” | “Sensor pairing issues”
+            </li>
+            <li>
+              <strong>Home Safety Toolkit:</strong> “PDF not downloading” | “Interactive section not loading”
+            </li>
+            <li>
+              <strong>Telehealth:</strong> “Video connection drops” | “EHR integration issue”
+            </li>
+            <li>
+              <strong>Pulse4Pulse:</strong> “Billing code errors” | “Technician scheduling delays”
+            </li>
           </BulletList>
+        </InfoBox>
+      </Section>
+
+      {/* 9.3: Infographics */}
+      <Section id="resources-infographics">
+        <SectionTitle>Resources ― Infographics</SectionTitle>
+        <InfoBox>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
+            <div style={{ width: "200px", height: "150px", background: "#e0e0e0" }}></div>
+            <p style={{ fontStyle: "italic" }}>Placeholder: “Need to Screen” Infographic</p>
+            <div style={{ width: "200px", height: "150px", background: "#e0e0e0" }}></div>
+            <p style={{ fontStyle: "italic" }}>Placeholder: “Safe Home Layout” Flowchart</p>
+          </div>
+        </InfoBox>
+      </Section>
+
+      {/* 9.4: Case Studies */}
+      <Section id="resources-case-studies">
+        <SectionTitle>Resources ― Case Studies</SectionTitle>
+        <InfoBox style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "center" }}>
+          <div style={{ background: "#fff", border: "1px solid #ddd", borderRadius: "4px", padding: "1rem", width: "280px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>
+            <p style={{ fontStyle: "italic" }}>
+              “Since implementing these programs, our clinic reduced patient falls by 30% in one year.”
+            </p>
+            <p style={{ textAlign: "right", fontSize: "0.9rem", color: "#555" }}>
+              – Dr. Alice Smith, Geriatric Specialist (Senior Care Facility)
+            </p>
+          </div>
+          <div style={{ background: "#fff", border: "1px solid #ddd", borderRadius: "4px", padding: "1rem", width: "280px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>
+            <p style={{ fontStyle: "italic" }}>
+              “Pulse4Pulse reduced downstream cardiovascular costs by 20% at our rehab center.”
+            </p>
+            <p style={{ textAlign: "right", fontSize: "0.9rem", color: "#555" }}>
+              – Dr. John Doe, Cardiologist (Rehab Center)
+            </p>
+          </div>
+        </InfoBox>
+      </Section>
+
+      {/* ───────────────── About Us ───────────────── */}
+      {/* 10.1: Mission & Vision */}
+      <Section id="about-mission">
+        <SectionTitle>About Us ― Mission &amp; Vision</SectionTitle>
+        <InfoBox>
+          <Paragraph>
+            We are committed to advancing preventive healthcare through innovative solutions
+            that improve patient safety and wellness. Our team brings decades of experience
+            in medical technology, rehabilitation, and patient care.
+          </Paragraph>
+        </InfoBox>
+      </Section>
+
+      {/* 10.2: Leadership Team */}
+      <Section id="about-team">
+        <SectionTitle>About Us ― Leadership Team</SectionTitle>
+        <InfoBox style={{ display: "flex", flexWrap: "wrap", gap: "2rem", justifyContent: "center" }}>
+          <div style={{ textAlign: "center", width: "150px" }}>
+            <div style={{ width: "100px", height: "100px", background: "#ddd", borderRadius: "50%", margin: "0 auto 0.5rem" }}></div>
+            {/* Placeholder: Photo of Jane Doe */}
+            <p style={{ fontWeight: 600 }}>Jane Doe</p>
+            <p style={{ fontSize: "0.9rem", color: "#555" }}>Founder &amp; CEO</p>
+          </div>
+          <div style={{ textAlign: "center", width: "150px" }}>
+            <div style={{ width: "100px", height: "100px", background: "#ddd", borderRadius: "50%", margin: "0 auto 0.5rem" }}></div>
+            {/* Placeholder: Photo of Richard Roe */}
+            <p style={{ fontWeight: 600 }}>Richard Roe</p>
+            <p style={{ fontSize: "0.9rem", color: "#555" }}>Chief Medical Officer</p>
+          </div>
+          <div style={{ textAlign: "center", width: "150px" }}>
+            <div style={{ width: "100px", height: "100px", background: "#ddd", borderRadius: "50%", margin: "0 auto 0.5rem" }}></div>
+            {/* Placeholder: Photo of Emily Smith */}
+            <p style={{ fontWeight: 600 }}>Emily Smith</p>
+            <p style={{ fontSize: "0.9rem", color: "#555" }}>Director of Therapy Programs</p>
+          </div>
+        </InfoBox>
+      </Section>
+
+      {/* 10.3: Partnerships & Affiliations */}
+      <Section id="about-affiliations">
+        <SectionTitle>About Us ― Partnerships &amp; Affiliations</SectionTitle>
+        <InfoBox>
+          <BulletList>
+            <li>National Falls Prevention Alliance</li>
+            <li>American Heart Association (Partner)</li>
+            <li>Telehealth Innovators Coalition</li>
+            <li>University of Alabama Health Research (UA HR)</li>
+            <li>Kappa Alpha Order (Affiliated)</li>
+          </BulletList>
+        </InfoBox>
+      </Section>
+
+      {/* ───────────────── Blog ───────────────── */}
+      <Section id="blog-section">
+        <SectionTitle>Blog</SectionTitle>
+        <InfoBox>
+          <BulletList>
+            <li>
+              <a href="#" style={{ color: COLORS.darkBlue, textDecoration: "underline" }}>
+                Top 5 Strategies for Fall Prevention in Hospitals
+              </a>
+            </li>
+            <li>
+              <a href="#" style={{ color: COLORS.darkBlue, textDecoration: "underline" }}>
+                Senior Wellness Tips: Balance Exercises &amp; Fall Prevention
+              </a>
+            </li>
+            <li>
+              <a href="#" style={{ color: COLORS.darkBlue, textDecoration: "underline" }}>
+                Pulse4Pulse Insights: Cardio Screening Best Practices
+              </a>
+            </li>
+            <li>
+              <a href="#" style={{ color: COLORS.darkBlue, textDecoration: "underline" }}>
+                Our Latest Product Updates &amp; News
+              </a>
+            </li>
+          </BulletList>
+        </InfoBox>
+      </Section>
+
+      {/* ───────────────── Contact ───────────────── */}
+      <Section id="contact">
+        <SectionTitle>Contact Us</SectionTitle>
+        <InfoBox>
+          <Paragraph>
+            Interested in learning more or scheduling a demo? Fill out the form below:
+          </Paragraph>
+          <form
+            className="contact-form"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.5rem",
+              maxWidth: "400px",
+              margin: "0 auto",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Name"
+              required
+              style={{ padding: "0.5rem", border: "1px solid #ccc", borderRadius: "4px" }}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              required
+              style={{ padding: "0.5rem", border: "1px solid #ccc", borderRadius: "4px" }}
+            />
+            <textarea
+              placeholder="Your Message"
+              rows={4}
+              style={{ padding: "0.5rem", border: "1px solid #ccc", borderRadius: "4px" }}
+            />
+            <button
+              type="submit"
+              style={{
+                alignSelf: "flex-start",
+                padding: "0.5rem 1rem",
+                background: COLORS.teal,
+                color: "#fff",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontWeight: 600,
+              }}
+            >
+              Submit
+            </button>
+          </form>
+          <button
+            onClick={() => (window.location.hash = "#home")}
+            style={{
+              marginTop: "1rem",
+              padding: "0.75rem 1.25rem",
+              background: COLORS.teal,
+              color: "#fff",
+              border: "none",
+              borderRadius: "4px",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            Request a Demo
+          </button>
+          <p
+            className="office-info"
+            style={{ marginTop: "1rem", fontSize: "0.9rem", color: "#555", textAlign: "center" }}
+          >
+            Office: 123 Health St, Wellness City, ST 00000 | Phone: (123) 456-7890 | Email: info@uprightmedical.com
+          </p>
         </InfoBox>
       </Section>
     </>
