@@ -365,7 +365,6 @@ const HeroButton = styled.a`
   font-size: 1rem;
   font-weight: 600;
   transition: background 0.2s ease-in-out;
-  text-decoration: none;
 
   &:hover {
     background: #64FFDA;
@@ -374,7 +373,7 @@ const HeroButton = styled.a`
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 /* 4) FALL RISK PAGE COMPONENT                                                                                          */
-/* ----------------------------------------------------------------------------------------------------------------- */  
+/* ----------------------------------------------------------------------------------------------------------------- */
 const FallRiskPage = () => {
   // track which section is currently visible
   const [activeSection, setActiveSection] = useState("hero")
@@ -382,7 +381,19 @@ const FallRiskPage = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const sectionIds = ["hero", "need-screen", "what-is-fra", "pboms", "workflow"]
+    const sectionIds = [
+      "hero",
+      "need-screen",
+      "what-is-fra",
+      "pboms",
+      "billing",
+      "pulse4pulse-overview",
+      "key-tests",
+      "eligible-conditions",
+      "practice-benefits",
+      "specialties",
+      "workflow",
+    ]
     const observerOptions = {
       root: null,
       rootMargin: "-40% 0px -60% 0px",
@@ -454,8 +465,63 @@ const FallRiskPage = () => {
             </a>
           </li>
           <li>
-            <a href="#pboms" className={activeSection === "pboms" ? "active" : ""}>
+            <a
+              href="#pboms"
+              className={activeSection === "pboms" ? "active" : ""}
+            >
               PBOMs
+            </a>
+          </li>
+          <li>
+            <a
+              href="#billing"
+              className={activeSection === "billing" ? "active" : ""}
+            >
+              Billing
+            </a>
+          </li>
+          <li>
+            <a
+              href="#pulse4pulse-overview"
+              className={
+                activeSection === "pulse4pulse-overview" ? "active" : ""
+              }
+            >
+              P4P Overview
+            </a>
+          </li>
+          <li>
+            <a
+              href="#key-tests"
+              className={activeSection === "key-tests" ? "active" : ""}
+            >
+              Key Tests
+            </a>
+          </li>
+          <li>
+            <a
+              href="#eligible-conditions"
+              className={
+                activeSection === "eligible-conditions" ? "active" : ""
+              }
+            >
+              Conditions
+            </a>
+          </li>
+          <li>
+            <a
+              href="#practice-benefits"
+              className={activeSection === "practice-benefits" ? "active" : ""}
+            >
+              Benefits
+            </a>
+          </li>
+          <li>
+            <a
+              href="#specialties"
+              className={activeSection === "specialties" ? "active" : ""}
+            >
+              Specialties
             </a>
           </li>
           <li>
@@ -496,6 +562,54 @@ const FallRiskPage = () => {
               className={activeSection === "pboms" ? "active" : ""}
             >
               PBOMs
+            </a>
+            <a
+              href="#billing"
+              onClick={(e) => handleMobileClick(e, "billing")}
+              className={activeSection === "billing" ? "active" : ""}
+            >
+              Billing
+            </a>
+            <a
+              href="#pulse4pulse-overview"
+              onClick={(e) =>
+                handleMobileClick(e, "pulse4pulse-overview")
+              }
+              className={
+                activeSection === "pulse4pulse-overview" ? "active" : ""
+              }
+            >
+              P4P Overview
+            </a>
+            <a
+              href="#key-tests"
+              onClick={(e) => handleMobileClick(e, "key-tests")}
+              className={activeSection === "key-tests" ? "active" : ""}
+            >
+              Key Tests
+            </a>
+            <a
+              href="#eligible-conditions"
+              onClick={(e) => handleMobileClick(e, "eligible-conditions")}
+              className={
+                activeSection === "eligible-conditions" ? "active" : ""
+              }
+            >
+              Conditions
+            </a>
+            <a
+              href="#practice-benefits"
+              onClick={(e) => handleMobileClick(e, "practice-benefits")}
+              className={activeSection === "practice-benefits" ? "active" : ""}
+            >
+              Benefits
+            </a>
+            <a
+              href="#specialties"
+              onClick={(e) => handleMobileClick(e, "specialties")}
+              className={activeSection === "specialties" ? "active" : ""}
+            >
+              Specialties
             </a>
             <a
               href="#workflow"
@@ -541,8 +655,8 @@ const FallRiskPage = () => {
         <InfoBox>
           <BulletList>
             <li>
-              The CDC STEADI initiative tells healthcare providers to “Screen all
-              patients age 65+ for fall risk.”
+              The CDC STEADI initiative tells healthcare providers to “Screen
+              all patients age 65+ for fall risk.”
             </li>
             <li>
               Based on American and British Geriatrics Societies’ clinical
@@ -645,34 +759,35 @@ const FallRiskPage = () => {
             </li>
             <li>
               <strong>APTA-SR/3 vs. STEADI:</strong> Demonstrated higher Positive
-              Likelihood Ratio (2.2 vs. 1.57) in Parcetich et al (2022).
+              Likelihood Ratio (2.2 vs 1.57) in Parcetich et al (2022).
             </li>
             <li>
-              <strong>Minimize False Negatives:</strong> Nithman et al (2019) showed
-              multiple tests reduce missed high-risk patients.
+              <strong>Minimize False Negatives:</strong> Nithman et al (2019)
+              showed multiple tests reduce missed high-risk patients.
             </li>
           </BulletList>
           <Paragraph>
             <strong>Quick Clinic Integration:</strong>
             <br />
             Patients self-screen via tablet or online form. A medical assistant
-            then runs 3-5 tests—walk speed, sit-to-stand, single-leg stance,
-            etc.—and our algorithm does the rest.
+            then runs 3–5 tests (walk speed, sit-to-stand, single-leg stance,
+            etc.) and our algorithm does the rest.
           </Paragraph>
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 3b: Billing & Financial Impact ─────────────── */}
+      {/* ──────────────── Section 4: Billing & Financial Impact ─────────────── */}
       <Section id="billing">
         <SectionTitle>Billing &amp; Financial Impact</SectionTitle>
         <InfoBox>
           <SubTitle>Billing Information</SubTitle>
           <Paragraph>
             Average procedure reimbursement: $73.48 (range $45–$136). Clients use
-            code CPT 97750 (Physical Performance Test) billed in 15-minute units.
-            Rounding rules: 8 minutes = 1 unit, 23 minutes = 2 units, 38 minutes =
-            3 units. For self-report questionnaire interpretation, use CPT 96160
-            — two questionnaires may be used in the protocol.
+            code <strong>CPT 97750</strong> (Physical Performance Test) billed in
+            15-minute units. Rounding rules: 8 minutes = 1 unit, 23 minutes = 2
+            units, 38 minutes = 3 units. For self-report questionnaire
+            interpretation, use <strong>CPT 96160</strong>—two questionnaires may
+            be used in the protocol.
           </Paragraph>
           <SubTitle>Fall Risk Program Financial Impact</SubTitle>
           <BulletList>
@@ -681,12 +796,12 @@ const FallRiskPage = () => {
               post-op): 6 months collections: <strong>$138,562</strong>
             </li>
             <li>
-              Arkansas (6 PT centers, program 5 days/week, patients 65+): 3
-              months collections: <strong>$176,215</strong>
+              Arkansas (6 PT centers, program 5 days/week, patients 65+):
+              3 months collections: <strong>$176,215</strong>
             </li>
             <li>
-              California (1 hospital, program 7 days/week, patients 65+): 3
-              months collections: <strong>$235,178</strong>
+              California (1 hospital, program 7 days/week, patients 65+, surgical
+              patients): 3 months collections: <strong>$235,178</strong>
             </li>
           </BulletList>
           <SubTitle>Plan of Care &amp; Educational Materials</SubTitle>
@@ -708,21 +823,213 @@ const FallRiskPage = () => {
         </InfoBox>
       </Section>
 
-      {/* ──────────────── Section 4: Clinic Workflow ───────────────── */}
+      {/* ──────────────── Section 5: Pulse4Pulse Overview & Mission ───────────────── */}
+      <Section id="pulse4pulse-overview">
+        <SectionTitle>Pulse4Pulse Overview &amp; Mission</SectionTitle>
+        <IntroText>
+          A turnkey cardiovascular wellness assessment service with $0 cost to your practice.
+        </IntroText>
+        <InfoBox>
+          <BulletList>
+            <li>
+              <strong>FDA-Cleared Device:</strong> Portable, in-office setup with a
+              small footprint. Physicians can quickly evaluate patients for multiple
+              chronic illnesses without referring out.
+            </li>
+            <li>
+              <strong>60%+ of Adult Patients Qualify:</strong> Detect disease at a
+              microvascular level and prevent catastrophic events.
+            </li>
+            <li>
+              <strong>Real-Time Results:</strong> Three simultaneous tests conducted
+              in 20 minutes by a certified technician—immediate reporting for
+              provider review.
+            </li>
+            <li>
+              <strong>$0 Cost to Your Practice:</strong> Pulse4Pulse supplies the
+              equipment, certified staff, and billing support—no capital expenditure,
+              no staff training burden.
+            </li>
+          </BulletList>
+          <SubTitle>How It Works</SubTitle>
+          <StepList>
+            <li>Intake Qualification: Patient completes a brief form to identify risk factors.</li>
+            <li>
+              On-Site Testing: A Pulse4Pulse medical assistant visits your practice
+              to perform the assessment using a portable, FDA-cleared device.
+            </li>
+            <li>
+              Instant Results: Technician provides real-time results and preliminary
+              recommendations to the provider during the same visit.
+            </li>
+            <li>
+              Billing & Support: Pulse4Pulse handles all billing and provides an
+              account manager to ensure smooth program implementation.
+            </li>
+          </StepList>
+        </InfoBox>
+      </Section>
+
+      {/* ──────────────── Section 6: Key Tests & Benefits ───────────────── */}
+      <Section id="key-tests">
+        <SectionTitle>Key Tests &amp; Benefits</SectionTitle>
+        <InfoBox>
+          <BulletList>
+            <li>
+              <strong>ANS Testing:</strong> Measures autonomic nervous system
+              function (heart rate variability, adaptability). Utilizes blood
+              pressure cuffs, EKG leads, and P02 sensors during controlled breathing.
+            </li>
+            <li>
+              <strong>ABI Testing:</strong> Screens for peripheral artery disease by
+              comparing limb blood pressures. Four cuffs and P02 sensors record for
+              two minutes each side.
+            </li>
+            <li>
+              <strong>Sudomotor Testing:</strong> Detects early microvascular
+              neuropathy by stimulating sweat glands—early detection of neuropathy.
+            </li>
+          </BulletList>
+          <Paragraph>
+            All three tests complete within a 20-minute, non-invasive session,
+            producing an easy-to-interpret summary report for the provider.
+          </Paragraph>
+        </InfoBox>
+      </Section>
+
+      {/* ──────────────── Section 7: Eligible Conditions ───────────────── */}
+      <Section id="eligible-conditions">
+        <SectionTitle>Eligible Conditions</SectionTitle>
+        <InfoBox>
+          <IntroText>
+            Any one condition below determines eligibility for Pulse4Pulse testing:
+          </IntroText>
+          <BulletList>
+            <li>Diabetes</li>
+            <li>High Blood Pressure</li>
+            <li>High Cholesterol</li>
+            <li>Sleep Apnea</li>
+            <li>Erectile Dysfunction / Sexual Dysfunction</li>
+            <li>Chronic Kidney Disease</li>
+            <li>Heart Disease</li>
+            <li>Current or Past Nicotine Use</li>
+            <li>Numbness or Coldness in Hands/Feet</li>
+            <li>Leg Pain When Walking (Claudication)</li>
+          </BulletList>
+        </InfoBox>
+      </Section>
+
+      {/* ──────────────── Section 8: Practice Benefits ───────────────── */}
+      <Section id="practice-benefits">
+        <SectionTitle>Practice Benefits</SectionTitle>
+        <InfoBox>
+          <BulletList>
+            <li>
+              <strong>New Revenue Stream:</strong> Potential for $150k/physician
+              annually; 60% of adult patients qualify for testing.
+            </li>
+            <li>
+              <strong>No Capital Expenditure:</strong> Pulse4Pulse provides device,
+              staffing, and billing—zero startup cost.
+            </li>
+            <li>
+              <strong>5 Billable Diagnostic Codes:</strong>
+              <ul>
+                <li key="code-93923">Ankle Brachial Index (CPT 93923)</li>
+                <li key="code-95921">Autonomic Function (CPT 95921)</li>
+                <li key="code-95923">Sudomotor (CPT 95923)</li>
+                <li key="code-93040">Electrocardiogram (CPT 93040)</li>
+                <li key="code-94761">Pulse Oximetry (CPT 94761)</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Enhanced Patient Care:</strong> Early detection of disease
+              indicators leads to timely intervention and improved outcomes.
+            </li>
+          </BulletList>
+        </InfoBox>
+      </Section>
+
+      {/* ──────────────── Section 9: Applicable Medical Specialties ───────────────── */}
+      <Section id="specialties">
+        <SectionTitle>Applicable Medical Specialties</SectionTitle>
+        <InfoBox>
+          <BulletList>
+            <li key="cardiology">
+              <strong>Cardiology:</strong> Diagnose CAD, hypercholesterolemia,
+              hypertension—especially in smokers, stroke history.
+            </li>
+            <li key="diabetic-medicine">
+              <strong>Diabetic Medicine:</strong> Diagnose diabetes, neuropathies,
+              PAD.
+            </li>
+            <li key="endocrinology">
+              <strong>Endocrinology:</strong> Wellness tool for diabetes/thyroid/
+              cholesterol issues.
+            </li>
+            <li key="gastroenterology">
+              <strong>Gastroenterology:</strong> Identify autonomic neuropathies
+              related to IBS, chronic constipation, abdominal pain.
+            </li>
+            <li key="general-practice">
+              <strong>General Practice:</strong> Helps screen 60% of asymptomatic
+              adults for hidden disease.
+            </li>
+            <li key="geriatric">
+              <strong>Geriatric Medicine:</strong> All geriatric patients qualify—
+              elevated ABI pressures over 70 correlate with dementia risk.
+            </li>
+            <li key="neurology">
+              <strong>Neurology:</strong> Quantify neuropathy for objective care
+              planning.
+            </li>
+            <li key="orthopedics-surgery">
+              <strong>Orthopedics &amp; Surgery:</strong> Pre-surgery screening for
+              circulatory and diabetic issues.
+            </li>
+            <li key="pain-management">
+              <strong>Pain Management:</strong> Differentiate vascular vs neuropathic
+              pain for tailored interventions.
+            </li>
+            <li key="pulmonology">
+              <strong>Pulmonology / Sleep Disorders:</strong> COPD and autonomic
+              dysfunction link.
+            </li>
+            <li key="weight-management">
+              <strong>Weight Management:</strong> High rates of diabetes/
+              thyroid/cholesterol in overweight patients.
+            </li>
+            <li key="wound-care-nephrology">
+              <strong>Wound Care / Nephrology:</strong> Screen for PAD in CKD patients
+              with ulcers.
+            </li>
+            <li key="integrative-internal">
+              <strong>Integrative &amp; Internal Medicine:</strong> Wellness tool for
+              asymptomatic screening and root-cause analysis of complex symptom
+              profiles.
+            </li>
+            <li key="urology">
+              <strong>Urology:</strong> Identify vascular causes of sexual dysfunction.
+            </li>
+          </BulletList>
+        </InfoBox>
+      </Section>
+
+      {/* ──────────────── Section 10: Clinic Workflow ───────────────── */}
       <Section id="workflow">
         <SectionTitle>Clinic Workflow – Best Practice Example</SectionTitle>
         <InfoBox>
           <IntroText>Step 1: Patient Screening</IntroText>
           <Paragraph>
-            Patients complete a brief questionnaire while waiting—captures
+            Patients self-answer a brief questionnaire while waiting—captures
             history, medications, previous falls.
           </Paragraph>
 
           <IntroText>Step 2: Performance Testing</IntroText>
           <Paragraph>
             Patient is escorted down the hallway for a 10-meter walk test. A
-            physician assistant or MA administers the remaining performance tests
-            in the exam room.
+            physician assistant or MA administers remaining tests in the exam
+            room.
           </Paragraph>
 
           <IntroText>Step 3: Report &amp; Care Plan</IntroText>
@@ -734,18 +1041,9 @@ const FallRiskPage = () => {
 
           <IntroText>Financial Impact / Case Studies</IntroText>
           <BulletList>
-            <li>
-              <strong>Florida (5 Physicians):</strong> 6 Months of Collections –
-              $138,562.
-            </li>
-            <li>
-              <strong>Arkansas (6 PT Centers):</strong> 3 Months of Collections –
-              $176,215.
-            </li>
-            <li>
-              <strong>California (1 Hospital):</strong> 3 Months of Collections –
-              $235,178.
-            </li>
+            <li key="case-fl"><strong>Florida (5 Physicians):</strong> 6 months collections – $138,562.</li>
+            <li key="case-ar"><strong>Arkansas (6 PT Centers):</strong> 3 months collections – $176,215.</li>
+            <li key="case-ca"><strong>California (1 Hospital):</strong> 3 months collections – $235,178.</li>
           </BulletList>
         </InfoBox>
       </Section>
