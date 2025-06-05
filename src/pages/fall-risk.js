@@ -1,3 +1,5 @@
+// File: src/pages/fall-risk.js
+
 import React, { useState, useEffect } from "react";
 import GlobalStyles from "../components/Layout/GlobalStyles";
 import Nav from "../components/Nav";
@@ -18,7 +20,7 @@ const FallRiskPage = () => {
   const [activeSection, setActiveSection] = useState("hero");
 
   useEffect(() => {
-    const sectionIds = [
+    const ids = [
       "hero",
       "products",
       "fra",
@@ -47,8 +49,7 @@ const FallRiskPage = () => {
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    sectionIds.forEach((id) => {
+    ids.forEach((id) => {
       const element = document.getElementById(id);
       if (element) {
         observer.observe(element);
@@ -66,8 +67,7 @@ const FallRiskPage = () => {
       {/* 2) Top navigation bar (passes activeSection so Nav can highlight the correct link) */}
       <Nav active={activeSection} />
 
-      {/* 3) Each “section” has its own component. Be sure each component sets its top‐level element’s id attribute
-             exactly to the strings we used in the observer list above. */}
+      {/* 3) Each “section” has its own component. Make sure each component’s top‐level element has the matching id. */}
 
       {/* ───────────── Hero / Introduction ───────────── */}
       <HeroSection id="hero" />

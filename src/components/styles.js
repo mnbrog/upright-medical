@@ -1,3 +1,5 @@
+// File: src/components/styles/index.js
+
 import styled, { createGlobalStyle } from "styled-components";
 
 export const COLORS = {
@@ -59,6 +61,22 @@ export const NavBar = styled.nav`
   padding-bottom: 0.5rem;
 `;
 
+export const LogoWrapper = styled.div`
+  margin: 1rem 0 0.5rem;
+
+  img {
+    display: block;
+    height: 100px;
+    width: auto;
+  }
+
+  @media (min-width: 600px) {
+    img {
+      height: 140px;
+    }
+  }
+`;
+
 export const NavLinks = styled.ul`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -90,8 +108,8 @@ export const NavLinks = styled.ul`
     position: absolute;
     background: ${COLORS.cardBg};
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
     z-index: 250;
+    border-radius: 4px;
   }
 
   li:hover > ul {
@@ -128,22 +146,6 @@ export const NavLinks = styled.ul`
   ul li a {
     padding: 0.5rem 0.75rem;
     color: ${COLORS.darkBlue};
-  }
-`;
-
-export const LogoWrapper = styled.div`
-  margin: 1rem 0 0.5rem;
-
-  img {
-    display: block;
-    height: 100px;
-    width: auto;
-  }
-
-  @media (min-width: 600px) {
-    img {
-      height: 140px;
-    }
   }
 `;
 

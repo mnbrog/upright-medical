@@ -1,5 +1,7 @@
-import React from "react"
-import { HeroVideo, BackgroundVideo, HeroContent, HeroButton } from "../styles"
+// File: src/components/sections/Hero.jsx
+
+import React from "react";
+import { HeroVideo, BackgroundVideo, HeroContent, HeroButton } from "../styles";
 
 const HeroSection = () => (
   <HeroVideo id="hero">
@@ -18,6 +20,6 @@ const HeroSection = () => (
       <HeroButton href="#contact">Get a Demo</HeroButton>
     </HeroContent>
   </HeroVideo>
-)
+);
 
-export default HeroSection
+export default HeroSection;

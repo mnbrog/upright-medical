@@ -1,7 +1,7 @@
 // File: src/components/Nav.jsx
 
-import React from "react"
-import { NavBar, NavLinks, LogoWrapper } from "./styles"
+import React from "react";
+import { NavBar, NavLinks, LogoWrapper } from "./styles";
 
 const Nav = ({ active }) => (
   <NavBar>
@@ -11,14 +11,12 @@ const Nav = ({ active }) => (
         alt="Upright Medical Solutions"
       />
     </LogoWrapper>
-
     <NavLinks>
       <li>
         <a href="#hero" className={active === "hero" ? "active" : ""}>
           Home
         </a>
       </li>
-
       <li>
         <a href="#products" className={active === "products" ? "active" : ""}>
           Products
@@ -35,7 +33,6 @@ const Nav = ({ active }) => (
               </li>
             </ul>
           </li>
-
           <li>
             <a href="#balance">Balance Training Program</a>
             <ul>
@@ -47,7 +44,6 @@ const Nav = ({ active }) => (
               </li>
             </ul>
           </li>
-
           <li>
             <a href="#safety">Home Safety Toolkit</a>
             <ul>
@@ -59,7 +55,6 @@ const Nav = ({ active }) => (
               </li>
             </ul>
           </li>
-
           <li>
             <a href="#telehealth">Telehealth Integration</a>
             <ul>
@@ -71,7 +66,6 @@ const Nav = ({ active }) => (
               </li>
             </ul>
           </li>
-
           <li>
             <a href="#pulse">Pulse4Pulse Cardiovascular Assessment</a>
             <ul>
@@ -94,7 +88,6 @@ const Nav = ({ active }) => (
           </li>
         </ul>
       </li>
-
       <li>
         <a href="#resources" className={active === "resources" ? "active" : ""}>
           Resources
@@ -114,7 +107,6 @@ const Nav = ({ active }) => (
           </li>
         </ul>
       </li>
-
       <li>
         <a href="#about" className={active === "about" ? "active" : ""}>
           About Us
@@ -131,13 +123,11 @@ const Nav = ({ active }) => (
           </li>
         </ul>
       </li>
-
       <li>
         <a href="#blog" className={active === "blog" ? "active" : ""}>
           Blog
         </a>
       </li>
-
       <li>
         <a href="#contact" className={active === "contact" ? "active" : ""}>
           Contact
@@ -153,6 +143,6 @@ const Nav = ({ active }) => (
       </li>
     </NavLinks>
   </NavBar>
-)
+);
 
-export default Nav
+export default Nav;
