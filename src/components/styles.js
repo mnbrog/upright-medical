@@ -16,17 +16,17 @@ export const GlobalStyles = createGlobalStyle`
   html {
     scroll-behavior: smooth;
     scroll-snap-type: y proximity;
-    height: 100%;
-  }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: #F7F9FA;
-    color: ${COLORS.darkBlue};
-    line-height: 1.5;
-    min-height: 100%;
     margin: 0;
+    padding: 0;
+    list-style: none;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    position: relative;
+    top: 0;
+    left: 100%;
   }
+    display: block;
 
   a {
     text-decoration: none;
