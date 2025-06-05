@@ -1,23 +1,21 @@
-// File: src/pages/fall-risk.js
+import React, { useState, useEffect } from "react";
+import GlobalStyles from "../components/Layout/GlobalStyles";
+import Nav from "../components/Nav";
 
-import React, { useState, useEffect } from "react"
-import GlobalStyles from "../components/Layout/GlobalStyles"
-import Nav from "../components/Nav"
-
-import HeroSection from "../components/sections/Hero"
-import ProductsSection from "../components/sections/Products"
-import FallRiskAssessment from "../components/sections/FallRiskAssessment"
-import BalanceTraining from "../components/sections/BalanceTraining"
-import HomeSafety from "../components/sections/HomeSafety"
-import Telehealth from "../components/sections/Telehealth"
-import Pulse4Pulse from "../components/sections/Pulse4Pulse"
-import Resources from "../components/sections/Resources"
-import About from "../components/sections/About"
-import Blog from "../components/sections/Blog"
-import Contact from "../components/sections/Contact"
+import HeroSection from "../components/sections/Hero";
+import ProductsSection from "../components/sections/Products";
+import FallRiskAssessment from "../components/sections/FallRiskAssessment";
+import BalanceTraining from "../components/sections/BalanceTraining";
+import HomeSafety from "../components/sections/HomeSafety";
+import Telehealth from "../components/sections/Telehealth";
+import Pulse4Pulse from "../components/sections/Pulse4Pulse";
+import Resources from "../components/sections/Resources";
+import About from "../components/sections/About";
+import Blog from "../components/sections/Blog";
+import Contact from "../components/sections/Contact";
 
 const FallRiskPage = () => {
-  const [activeSection, setActiveSection] = useState("hero")
+  const [activeSection, setActiveSection] = useState("hero");
 
   useEffect(() => {
     const sectionIds = [
@@ -32,32 +30,33 @@ const FallRiskPage = () => {
       "about",
       "blog",
       "contact",
-    ]
+    ];
 
     const observerOptions = {
       root: null,
       rootMargin: "-40% 0px -60% 0px",
       threshold: 0,
-    }
+    };
 
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setActiveSection(entry.target.id)
+          setActiveSection(entry.target.id);
         }
-      })
-    }
+      });
+    };
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions)
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
     sectionIds.forEach((id) => {
-      const element = document.getElementById(id)
+      const element = document.getElementById(id);
       if (element) {
-        observer.observe(element)
+        observer.observe(element);
       }
-    })
+    });
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -73,7 +72,7 @@ const FallRiskPage = () => {
       {/* ───────────── Hero / Introduction ───────────── */}
       <HeroSection id="hero" />
 
-      {/* ───────────── Products overview (just the “Products” landing slice) ───────────── */}
+      {/* ───────────── Products overview ───────────── */}
       <ProductsSection id="products" />
 
       {/* ───────────── Fall Risk Assessment ───────────── */}
@@ -103,7 +102,7 @@ const FallRiskPage = () => {
       {/* ───────────── Contact ───────────── */}
       <Contact id="contact" />
     </>
-  )
-}
+  );
+};
 
-export default FallRiskPage
+export default FallRiskPage;

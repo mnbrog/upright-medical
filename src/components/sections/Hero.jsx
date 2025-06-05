@@ -1,12 +1,23 @@
 import React from "react"
-import { Hero, HeroButton } from "../styles"
+import { HeroVideo, BackgroundVideo, HeroContent, HeroButton } from "../styles"
 
 const HeroSection = () => (
-  <Hero id="hero">
-    <h1>Innovative Health & Safety Solutions</h1>
-    <p>Predict Risk. Prevent Falls.</p>
-    <HeroButton href="#contact">Get a Demo</HeroButton>
-  </Hero>
+  <HeroVideo id="hero">
+    <BackgroundVideo
+      autoPlay
+      loop
+      muted
+      playsInline
+      poster="/images/clinic-background-fallback.jpg"
+      src="/videos/clinic-background.mp4"
+      type="video/mp4"
+    />
+    <HeroContent>
+      <h1>Innovative Health &amp; Safety Solutions</h1>
+      <p>Predict Risk. Prevent Falls.</p>
+      <HeroButton href="#contact">Get a Demo</HeroButton>
+    </HeroContent>
+  </HeroVideo>
 )
 
 export default HeroSection
