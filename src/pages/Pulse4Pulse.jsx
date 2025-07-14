@@ -1,7 +1,5 @@
-// File: src/pages/pulse4pulse.jsx
-
 import React from "react";
-import GlobalStyles from "../components/Layout/GlobalStyles"; // Import GlobalStyles
+import GlobalStyles from "../components/Layout/GlobalStyles";
 import Nav from "../components/Nav";
 import PulseHero from "../components/sections/PulseHero";
 import PulseNeed from "../components/sections/PulseNeed";
@@ -15,11 +13,9 @@ import About from "../components/sections/About";
 import Contact from "../components/sections/Contact";
 import Footer from "../components/Footer";
 
-// Reuse the shared footer styling
-
 const Pulse4Pulse = () => (
   <>
-    <GlobalStyles /> {/* This component injects all global styles */}
+    <GlobalStyles />
     <Nav active="pulse4pulse" />
     <main>
       <PulseHero />
@@ -31,7 +27,7 @@ const Pulse4Pulse = () => (
       <PulseBenefits />
       <PulseSpecialties />
       <About />
-      <Contact isPulsePage={true} />
+      <Contact />
     </main>
     <Footer />
   </>
