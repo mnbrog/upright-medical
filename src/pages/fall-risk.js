@@ -9,8 +9,6 @@ import NeedScreen from "../components/sections/NeedScreen";
 import FraOverview from "../components/sections/FraOverview";
 import FraResearch from "../components/sections/FraResearch";
 import WhoWeHelp from "../components/sections/WhoWeHelp";
-import About from "../components/sections/About";
-import Contact from "../components/sections/Contact";
 
 const FallRiskPage = () => {
   const [activeSection, setActiveSection] = useState("hero");
@@ -22,8 +20,6 @@ const FallRiskPage = () => {
       "fra-overview",
       "fra-research",
       "who-we-help",
-      "about",
-      "contact",
     ];
 
     const observerOptions = {
@@ -73,11 +69,6 @@ const FallRiskPage = () => {
       {/* ───────────── Who We Help ───────────── */}
       <WhoWeHelp id="who-we-help" />
 
-      {/* ───────────── About ───────────── */}
-      <About id="about" />
-
-      {/* ───────────── Contact ───────────── */}
-      <Contact id="contact" />
     </>
   );
 };
