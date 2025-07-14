@@ -33,7 +33,7 @@ const Nav = ({ active }) => (
             </a>
           </li>
           <li>
-            <a href="/Pulse4Pulse/" className={active === "Pulse4Pulse" ? "active" : ""}>
+            <a href="/Pulse4Pulse/" className={active === "pulse4pulse" ? "active" : ""}>
               Pulse4Pulse
             </a>
           </li>
@@ -41,12 +41,12 @@ const Nav = ({ active }) => (
       </li>
 
       <li>
-        <a href="/about" className={active === "about" ? "active" : ""}>
+        <a href="/#about" className={active === "about" ? "active" : ""}>
           About
         </a>
       </li>
       <li>
-        <a href="/contact" className={active === "contact" ? "active" : ""}>
+        <a href="/#contact" className={active === "contact" ? "active" : ""}>
           Contact
         </a>
       </li>

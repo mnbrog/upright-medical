@@ -11,8 +11,6 @@ import PulseEligibility from "../components/sections/PulseEligibility";
 import PulseAssessment from "../components/sections/PulseAssessment";
 import PulseBenefits from "../components/sections/PulseBenefits";
 import PulseSpecialties from "../components/sections/PulseSpecialties";
-import About from "../components/sections/About";
-import Contact from "../components/sections/Contact";
 import Footer from "../components/Footer";
 
 // Reuse the shared footer styling
@@ -30,8 +28,6 @@ const Pulse4Pulse = () => (
       <PulseAssessment />
       <PulseBenefits />
       <PulseSpecialties />
-      <About />
-      <Contact isPulsePage={true} />
     </main>
     <Footer />
   </>
