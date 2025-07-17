@@ -32,8 +32,8 @@ export const NavBar = styled.nav`
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   z-index: 200;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   padding: 0.5rem 1rem;
 
   /* Tablet layout wraps nav items */
@@ -69,6 +69,7 @@ export const HamburgerButton = styled.button`
 
   @media ${device.mobile} {
     display: block;
+    align-self: flex-end;
   }
 
   &:focus {
@@ -83,6 +84,7 @@ export const NavLinks = styled.ul`
   margin: 0;
   padding: 0.5rem 1rem;
   position: relative;
+  justify-content: center;
 
   > li {
     position: relative;
@@ -260,13 +262,41 @@ export const HeroContent = styled.div`
   color: #ffffff;
 
   h1 {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-size: clamp(2rem, 5vw, 3rem);
     margin-bottom: 1rem;
   }
 
   p {
-    font-size: clamp(1.125rem, 3vw, 1.5rem);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
     margin-bottom: 1.5rem;
+  }
+
+  /* Fine-tune font sizes per breakpoint */
+  @media ${device.mobile} {
+    h1 {
+      font-size: 2rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  @media ${device.tablet} {
+    h1 {
+      font-size: 2.5rem;
+    }
+    p {
+      font-size: 1.125rem;
+    }
+  }
+
+  @media ${device.desktop} {
+    h1 {
+      font-size: 3rem;
+    }
+    p {
+      font-size: 1.25rem;
+    }
   }
 `;
 
@@ -673,7 +703,7 @@ export const AboutIntroWrapper = styled.div`
 `;
 
 export const MissionStatement = styled.h3`
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 3vw, 1.5rem);
   font-weight: 500;
   line-height: 1.6;
   color: #334D6E;
