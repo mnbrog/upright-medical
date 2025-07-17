@@ -5,18 +5,21 @@ export default createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
-    padding: 50;
+    padding: 0;
   }
 
   html {
     scroll-behavior: smooth;
+    font-size: 16px;
   }
 
+  /* Base body styles with fluid font size */
   body {
     font-family: 'Inter', sans-serif;
     background: #F7F9FA;
     color: #0A2640;
     line-height: 1.5;
+    font-size: clamp(1rem, 2vw, 1.125rem);
   }
 
   a {

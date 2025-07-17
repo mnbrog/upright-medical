@@ -11,7 +11,8 @@ import {
   HeroButton,
   HeroVideo,
   BackgroundVideo,
-  HeroContent
+  HeroContent,
+  device
 } from "../components/styles";
 
 // Styled-components for the product section
@@ -20,6 +21,15 @@ const ProductGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
+
+  /* Two columns on tablet, single on mobile */
+  @media ${device.tablet} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media ${device.mobile} {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const ProductCard = styled.div`
