@@ -29,7 +29,16 @@ const Nav = ({ active }) => {
           <a
             href="#"
             className={`dropdown-toggle ${
-              active === "fall-risk" || active === "pulse4pulse" ? "active" : ""
+              [
+                "fall-risk",
+                "tendonova",
+                "echolight",
+                "hemaclear",
+                "inkwell-health",
+                "q-care-management"
+              ].includes(active)
+                ? "active"
+                : ""
             }`}
           >
             Products
@@ -40,15 +49,47 @@ const Nav = ({ active }) => {
                 href="/fall-risk"
                 className={active === "fall-risk" ? "active" : ""}
               >
-                Fall Risk
+                Fall Risk Assessment
               </a>
             </li>
             <li>
               <a
-                href="/Pulse4Pulse"
-                className={active === "pulse4pulse" ? "active" : ""}
+                href="/tendonova"
+                className={active === "tendonova" ? "active" : ""}
               >
-                Pulse4Pulse
+                TendoNova
+              </a>
+            </li>
+            <li>
+              <a
+                href="/echolight"
+                className={active === "echolight" ? "active" : ""}
+              >
+                Echolight
+              </a>
+            </li>
+            <li>
+              <a
+                href="/hemaclear"
+                className={active === "hemaclear" ? "active" : ""}
+              >
+                HemaClear
+              </a>
+            </li>
+            <li>
+              <a
+                href="/inkwell-health"
+                className={active === "inkwell-health" ? "active" : ""}
+              >
+                InkWell Health
+              </a>
+            </li>
+            <li>
+              <a
+                href="/q-care-management"
+                className={active === "q-care-management" ? "active" : ""}
+              >
+                Q Care Management
               </a>
             </li>
           </ul>

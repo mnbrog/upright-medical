@@ -107,12 +107,52 @@ const HomePage = () => (
 
           <ProductCard>
             <div>
-              <ProductTitle>Pulse4Pulse</ProductTitle>
+              <ProductTitle>TendoNova Ocelot®</ProductTitle>
               <ProductDescription>
-                A turnkey cardiovascular wellness assessment service provided at no cost to your practice, complete with staff and billing support.
+                A minimally invasive solution for percutaneous tenotomy that is faster, easier, and reimbursable.
               </ProductDescription>
             </div>
-            <HeroButton href="/Pulse4Pulse">Learn More</HeroButton>
+            <HeroButton href="/tendonova">Learn More</HeroButton>
+          </ProductCard>
+
+          <ProductCard>
+            <div>
+              <ProductTitle>Echolight</ProductTitle>
+              <ProductDescription>
+                Radiofrequency Echographic Multi Spectrometry (REMS) for the evaluation of bone quantity and quality.
+              </ProductDescription>
+            </div>
+            <HeroButton href="/echolight">Learn More</HeroButton>
+          </ProductCard>
+
+          <ProductCard>
+            <div>
+              <ProductTitle>HemaClear®</ProductTitle>
+              <ProductDescription>
+                The all-in-one, sterile, exsanguination tourniquet for a bloodless surgical field in limb surgery.
+              </ProductDescription>
+            </div>
+            <HeroButton href="/hemaclear">Learn More</HeroButton>
+          </ProductCard>
+
+          <ProductCard>
+            <div>
+              <ProductTitle>InkWell Health</ProductTitle>
+              <ProductDescription>
+                Proprietary temporary tattoo technology to personalize recovery after orthopedic surgery.
+              </ProductDescription>
+            </div>
+            <HeroButton href="/inkwell-health">Learn More</HeroButton>
+          </ProductCard>
+
+          <ProductCard>
+            <div>
+              <ProductTitle>Q Care Management</ProductTitle>
+              <ProductDescription>
+                A clinically based provider of Medicare's Chronic Care Management, Behavioral Health Integration, Advanced Primary Care Management, and Health Risk Assessment/Annual Wellness Visit programs.
+              </ProductDescription>
+            </div>
+            <HeroButton href="/q-care-management">Learn More</HeroButton>
           </ProductCard>
         </ProductGrid>
       </Section>

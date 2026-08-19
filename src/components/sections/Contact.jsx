@@ -14,18 +14,18 @@ import {
 } from "../styles";
 import { FaEnvelope, FaPhoneAlt } from 'react-icons/fa';
 
-const Contact = ({ isPulsePage = false }) => (
+const Contact = ({ product }) => (
   <Section id="contact">
     <SectionTitle>Get in Touch</SectionTitle>
 
     <ContactLayout>
       <ContactInfo>
         <Subheading>
-            {isPulsePage ? "Let’s Talk Cardiovascular Wellness." : "Let’s Talk Fall Prevention."}
+            {product ? `Let’s Talk ${product}.` : "Let’s Talk Fall Prevention."}
         </Subheading>
         <ContactParagraph>
-            {isPulsePage
-                ? "Learn how our Pulse4Pulse assessment program can benefit your practice and patients. Contact us for a demo, billing details, or to discuss how to implement this turnkey service."
+            {product
+                ? `Interested in learning more about ${product}? Contact us for details, pricing, or to discuss bringing it into your practice.`
                 : "Interested in learning more about how our Fall Risk Assessment program can benefit your practice and patients? Contact us for a demo, pricing information, or a partnership discussion."
             }
         </ContactParagraph>
@@ -52,8 +52,12 @@ const Contact = ({ isPulsePage = false }) => (
         
         <select name="subject" required defaultValue="">
           <option value="" disabled>I'm interested in...</option>
-          <option value="Pulse4Pulse Inquiry">Pulse4Pulse Inquiry</option>
           <option value="Fall Risk Inquiry">Fall Risk Inquiry</option>
+          <option value="TendoNova Inquiry">TendoNova Inquiry</option>
+          <option value="Echolight Inquiry">Echolight Inquiry</option>
+          <option value="HemaClear Inquiry">HemaClear Inquiry</option>
+          <option value="InkWell Health Inquiry">InkWell Health Inquiry</option>
+          <option value="Q Care Management Inquiry">Q Care Management Inquiry</option>
           <option value="Demo Request">Requesting a Demo</option>
           <option value="Pricing Information">Pricing Information</option>
           <option value="Partnership">Partnership Inquiry</option>

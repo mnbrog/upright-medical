@@ -440,10 +440,10 @@ export const IconWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background-color: ${COLORS.lightTeal};
+  background-color: ${props => props.$accent ? `${props.$accent}22` : COLORS.lightTeal};
   border-radius: 50%;
   margin-bottom: 1rem;
-  color: ${COLORS.darkBlue};
+  color: ${props => props.$accent || COLORS.darkBlue};
   font-size: 1.75rem;
 `;
 
@@ -488,7 +488,7 @@ export const StepIcon = styled.div`
   justify-content: center;
   width: 70px;
   height: 70px;
-  background-color: ${COLORS.darkBlue};
+  background-color: ${props => props.$accent || COLORS.darkBlue};
   border-radius: 50%;
   margin-bottom: 1rem;
   color: ${COLORS.cardBg};
@@ -803,4 +803,182 @@ export const ProcessStep = styled.div`
 
 // ... (rest of the styles)
 
-// ... (rest of the styles)
+// --- STYLES FOR MANUFACTURER PRODUCT PAGES ---
+
+export const ProductHero = styled.section`
+  background: ${props => props.$gradient || `linear-gradient(135deg, ${COLORS.darkBlue} 0%, #123a5e 100%)`};
+  padding: 5rem 1.5rem 4rem;
+  text-align: center;
+  color: #ffffff;
+
+  @media (max-width: 768px) {
+    padding: 4rem 1.25rem 3rem;
+  }
+`;
+
+export const VisualPanel = styled.div`
+  background: ${props => props.$gradient || `linear-gradient(135deg, ${COLORS.darkBlue} 0%, #123a5e 100%)`};
+  border-radius: 16px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  color: #ffffff;
+  box-shadow: 0 8px 32px rgba(10, 38, 64, 0.15);
+  text-align: center;
+`;
+
+export const VisualPanelIcon = styled.div`
+  font-size: 4.5rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.95;
+`;
+
+export const VisualPanelLabel = styled.p`
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+`;
+
+export const SpecChipRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+`;
+
+export const SpecChip = styled.span`
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+`;
+
+export const BadgeRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+`;
+
+export const Badge = styled.span`
+  background: ${props => props.$accent ? `${props.$accent}1A` : COLORS.lightBg};
+  color: ${props => props.$accent || COLORS.darkBlue};
+  border: 1px solid ${props => props.$accent ? `${props.$accent}55` : '#EAECEF'};
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+`;
+
+export const AccentDivider = styled.div`
+  width: 60px;
+  height: 4px;
+  border-radius: 2px;
+  background: ${props => props.$accent || COLORS.teal};
+  margin: 0 auto 1.5rem auto;
+`;
+
+export const ProductEyebrow = styled.p`
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: ${COLORS.lightTeal};
+  margin-bottom: 0.75rem;
+`;
+
+export const ProductHeroTitle = styled.h1`
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+`;
+
+export const ProductHeroDescriptor = styled.p`
+  font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+  max-width: 750px;
+  margin: 0 auto;
+  line-height: 1.6;
+  color: #E6EEF5;
+`;
+
+export const CategoryTag = styled.span`
+  display: inline-block;
+  background: ${COLORS.lightTeal};
+  color: ${COLORS.darkBlue};
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+`;
+
+export const TableWrapper = styled.div`
+  width: 100%;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  border: 1px solid #EAECEF;
+`;
+
+export const DataTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 480px;
+
+  caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    background: ${COLORS.lightBg};
+  }
+
+  th, td {
+    padding: 0.65rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #EAECEF;
+  }
+
+  thead th {
+    background: ${COLORS.darkBlue};
+    color: #ffffff;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  tbody tr:nth-child(even) {
+    background: ${COLORS.lightBg};
+  }
+`;
+
+export const FootnoteText = styled.p`
+  font-size: 0.8rem;
+  color: ${COLORS.neutralGray};
+  line-height: 1.5;
+  margin-top: 0.75rem;
+`;
+
+export const RegulatoryBlock = styled.p`
+  font-size: 0.8rem;
+  color: ${COLORS.neutralGray};
+  line-height: 1.6;
+  background: ${COLORS.lightBg};
+  border-left: 3px solid ${COLORS.teal};
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+`;
+
+export const ManufacturerLinkRow = styled.div`
+  text-align: center;
+  margin-top: 2.5rem;
+`;
