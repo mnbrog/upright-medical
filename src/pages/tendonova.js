@@ -43,8 +43,7 @@ import {
   QuoteText,
   CTAWrapper,
   ManufacturerLinkRow,
-  HeroButton,
-  ContactDetail
+  HeroButton
 } from "../components/styles";
 import {
   FaSyringe,
@@ -58,9 +57,7 @@ import {
   FaClock,
   FaBan,
   FaChartLine,
-  FaSmile,
-  FaEnvelope,
-  FaPhoneAlt
+  FaSmile
 } from "react-icons/fa";
 
 const ACCENT = "#7C3AED";
@@ -280,15 +277,6 @@ const TendoNovaPage = () => (
         <p style={{ maxWidth: "600px", margin: "0 auto 1.5rem auto" }}>
           Reach out for details on the Ocelot® device, pricing, or getting started.
         </p>
-
-        <ContactDetail style={{ justifyContent: "center" }}>
-          <FaPhoneAlt color={ACCENT} size="20" />
-          <a href="tel:8772030161">877.203.0161</a>
-        </ContactDetail>
-        <ContactDetail style={{ justifyContent: "center" }}>
-          <FaEnvelope color={ACCENT} size="20" />
-          <a href="mailto:sales@tendonova.com">sales@tendonova.com</a>
-        </ContactDetail>
 
         <ManufacturerLinkRow>
           <HeroButton

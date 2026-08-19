@@ -9,6 +9,7 @@ import {
   Section,
   SectionTitle,
   LeadParagraph,
+  BulletList,
   ProductHero,
   ProductEyebrow,
   ProductHeroTitle,
@@ -71,6 +72,47 @@ const EcholightPage = () => (
           Radiofrequency Echographic Multi Spectrometry (REMS) for the evaluation of bone quantity and quality
         </ProductHeroDescriptor>
       </ProductHero>
+
+      <Section id="what-is-echolight">
+        <SectionTitle>What is Echolight?</SectionTitle>
+        <LeadParagraph style={{ textAlign: "center", maxWidth: "800px", margin: "0 auto" }}>
+          Radiofrequency Echographic Multi Spectrometry (REMS) for the evaluation of bone quantity and quality.
+        </LeadParagraph>
+      </Section>
+
+      <Section id="current-methods">
+        <SectionTitle>Current Available Methods for Bone Health Assessment</SectionTitle>
+        <FeatureGrid style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
+          <FeatureCard>
+            <FeatureTitle>DEXA</FeatureTitle>
+            <FeatureDescription>Ionizing Radiation Method</FeatureDescription>
+            <BulletList style={{ textAlign: "left", marginTop: "1rem" }}>
+              <li>Evaluates axial sites: Lumbar Spine (L1-L4) and Femoral Neck</li>
+              <li>Provides BMD/T-score/Z-score</li>
+              <li>10-year FRAX</li>
+            </BulletList>
+          </FeatureCard>
+          <FeatureCard style={{ border: `2px solid ${ACCENT}` }}>
+            <FeatureTitle style={{ color: ACCENT }}>Echolight REMS Technology</FeatureTitle>
+            <FeatureDescription>Ultrasound Method</FeatureDescription>
+            <BulletList style={{ textAlign: "left", marginTop: "1rem" }}>
+              <li>Evaluates the same axial sites as DEXA</li>
+              <li>Provides BMD/T-score/Z-score</li>
+              <li>Fragility Score</li>
+              <li>5-year fracture risk</li>
+            </BulletList>
+          </FeatureCard>
+          <FeatureCard>
+            <FeatureTitle>Peripheral QUS</FeatureTitle>
+            <FeatureDescription>Ultrasound Method (radius, tibia, calcaneus, phalanges)</FeatureDescription>
+            <BulletList style={{ textAlign: "left", marginTop: "1rem" }}>
+              <li>Does not assess axial sites</li>
+              <li>Provides bone density index (not BMD)</li>
+              <li>Not to be confused with REMS</li>
+            </BulletList>
+          </FeatureCard>
+        </FeatureGrid>
+      </Section>
 
       <Section id="scan">
         <TwoColumnLayout>

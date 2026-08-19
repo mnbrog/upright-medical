@@ -982,3 +982,30 @@ export const ManufacturerLinkRow = styled.div`
   text-align: center;
   margin-top: 2.5rem;
 `;
+
+export const VideoWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 9 / 16;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(10, 38, 64, 0.15);
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+`;
+
+export const VideoCaption = styled.p`
+  text-align: center;
+  font-size: 0.9rem;
+  color: ${COLORS.neutralGray};
+  margin-top: 1rem;
+`;

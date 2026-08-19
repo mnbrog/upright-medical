@@ -46,7 +46,8 @@ import {
   CTAWrapper,
   ManufacturerLinkRow,
   HeroButton,
-  ContactDetail
+  VideoWrapper,
+  VideoCaption
 } from "../components/styles";
 import {
   FaTint,
@@ -61,8 +62,7 @@ import {
   FaCut,
   FaRulerCombined,
   FaExchangeAlt,
-  FaExclamationTriangle,
-  FaPhoneAlt
+  FaExclamationTriangle
 } from "react-icons/fa";
 
 const ACCENT = "#1B4F8C";
@@ -275,18 +275,26 @@ const HemaClearPage = () => (
         </CTAWrapper>
       </Section>
 
+      <Section id="in-action">
+        <SectionTitle>See HemaClear in Action</SectionTitle>
+        <VideoWrapper>
+          <iframe
+            src="https://www.youtube.com/embed/GPkDLfN99vc"
+            title="HemaClear XXL Tourniquets Application"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </VideoWrapper>
+        <VideoCaption>
+          Dr. Matthew Barber, sports medicine orthopedic surgeon (Mobile, Alabama)
+        </VideoCaption>
+      </Section>
+
       <Section id="contact-hemaclear">
         <SectionTitle>Learn More</SectionTitle>
         <LeadParagraph style={{ textAlign: "center" }}>
           HemaClear® is a product of Oneg HaKarmel Ltd. Haifa, Israel
         </LeadParagraph>
-        <LeadParagraph style={{ textAlign: "center" }}>
-          US Representative: OHK Medical Devices Inc., 9340 Unit B 7th Street, Rancho Cucamonga, California, USA
-        </LeadParagraph>
-        <ContactDetail style={{ justifyContent: "center" }}>
-          <FaPhoneAlt color={ACCENT} size="20" />
-          <a href="tel:+18665031470">+1.866.503.1470</a>
-        </ContactDetail>
         <ManufacturerLinkRow>
           <HeroButton
             href="https://www.hemaclear.com"
@@ -295,6 +303,14 @@ const HemaClearPage = () => (
             style={{ background: ACCENT }}
           >
             Visit hemaclear.com
+          </HeroButton>
+          <HeroButton
+            href="https://www.hemashock.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ background: ACCENT, marginLeft: "1rem" }}
+          >
+            Visit hemashock.com
           </HeroButton>
         </ManufacturerLinkRow>
         <FootnoteText style={{ textAlign: "center", marginTop: "2rem" }}>

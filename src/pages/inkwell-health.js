@@ -17,11 +17,7 @@ import {
   CategoryTag,
   TwoColumnLayout,
   TextColumn,
-  VisualPanel,
-  VisualPanelIcon,
-  VisualPanelLabel,
-  SpecChipRow,
-  SpecChip,
+  ImageWrapper,
   FeatureGrid,
   FeatureCard,
   IconWrapper,
@@ -41,8 +37,7 @@ import {
   AccentDivider,
   CTAWrapper,
   ManufacturerLinkRow,
-  HeroButton,
-  ContactDetail
+  HeroButton
 } from "../components/styles";
 import {
   FaMobileAlt,
@@ -63,9 +58,7 @@ import {
   FaShieldVirus,
   FaAmbulance,
   FaSmile,
-  FaCalendarCheck,
-  FaEnvelope,
-  FaPhoneAlt
+  FaCalendarCheck
 } from "react-icons/fa";
 
 const ACCENT = "#2F5FD6";
@@ -87,15 +80,12 @@ const InkWellHealthPage = () => (
 
       <Section id="overview">
         <TwoColumnLayout>
-          <VisualPanel $gradient={GRADIENT}>
-            <VisualPanelIcon><FaMobileAlt /></VisualPanelIcon>
-            <VisualPanelLabel>InkWell Health Knee Module (IWH-K)</VisualPanelLabel>
-            <SpecChipRow>
-              <SpecChip>Patent-Pending</SpecChip>
-              <SpecChip>Smartphone Scan</SpecChip>
-              <SpecChip>30-Second Apply</SpecChip>
-            </SpecChipRow>
-          </VisualPanel>
+          <ImageWrapper>
+            <img
+              src="/images/inkwell-health-hero.png"
+              alt="InkWell Health: The World's First Remote Monitoring Solution for Knee Surgery Patients, showing the RTM tattoo applied to a knee and scanned by phone"
+            />
+          </ImageWrapper>
 
           <TextColumn>
             <SectionTitle>The InkWell Health Knee Module (IWH-K)</SectionTitle>
@@ -334,15 +324,6 @@ const InkWellHealthPage = () => (
 
       <CTAWrapper>
         <h2 style={{ marginBottom: "1rem" }}>Ready to Bring InkWell Health to Your Practice?</h2>
-        <p style={{ maxWidth: "600px", margin: "0 auto 1rem auto" }}>John Matthews</p>
-        <ContactDetail style={{ justifyContent: "center" }}>
-          <FaEnvelope color={ACCENT} size="20" />
-          <a href="mailto:jmatthews@inkwellhealth.com">jmatthews@inkwellhealth.com</a>
-        </ContactDetail>
-        <ContactDetail style={{ justifyContent: "center" }}>
-          <FaPhoneAlt color={ACCENT} size="20" />
-          <a href="tel:14169048278">1-416-9048278</a>
-        </ContactDetail>
         <ManufacturerLinkRow>
           <HeroButton
             href="https://www.inkwellhealth.com"
