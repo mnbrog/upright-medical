@@ -79,7 +79,7 @@ const HomePage = () => (
               Upright Medical Solutions
             </SectionTitle>
             <MissionStatement style={{ color: '#fff' }}>
-              Empowering providers with innovative, value-based solutions—from fall prevention to cardiovascular wellness—that improve patient outcomes and preserve independence.
+              Empowering providers with innovative, value-based solutions from fall prevention to cardiovascular wellness that improve patient outcomes and preserve independence.
             </MissionStatement>
             <HeroButton
               href="#products"
