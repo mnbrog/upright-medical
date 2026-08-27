@@ -7,6 +7,7 @@ import Nav from "../components/Nav";
 import HeroSection from "../components/sections/Hero";
 import NeedScreen from "../components/sections/NeedScreen";
 import FraOverview from "../components/sections/FraOverview";
+import FraVideo from "../components/sections/FraVideo";
 import FraResearch from "../components/sections/FraResearch";
 import WhoWeHelp from "../components/sections/WhoWeHelp";
 
@@ -27,6 +28,7 @@ const FallRiskPage = () => (
       <HeroSection />
       <NeedScreen />
       <FraOverview />
+      <FraVideo />
       <FraResearch />
       <WhoWeHelp />
     </main>
