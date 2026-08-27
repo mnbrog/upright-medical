@@ -1008,6 +1008,16 @@ export const VideoCaption = styled.p`
   font-size: 0.9rem;
   color: ${COLORS.neutralGray};
   margin-top: 1rem;
+
+  a {
+    color: ${COLORS.teal};
+    text-decoration: underline;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: ${COLORS.darkBlue};
+    }
+  }
 `;
 /* Responsive 16:9 embed used for the Fall Risk overview video.
    Pass $aspect (e.g. "9 / 16") for vertical clips. */

@@ -14,12 +14,13 @@ import {
 } from "../styles";
 
 const VIDEO_ID = "d6lyGmjHqSs";
+const WATCH_URL = `https://youtu.be/${VIDEO_ID}`;
 
 // Muted autoplay is what browsers allow without a user gesture, so the clip
 // starts on its own the first time the section scrolls into view.
 const EMBED_SRC =
   `https://www.youtube.com/embed/${VIDEO_ID}` +
-  `?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1`;
+  `?autoplay=1&mute=1&playsinline=1&rel=0`;
 
 const FraVideo = () => {
   const { ref, inView } = useInView({
@@ -41,6 +42,9 @@ const FraVideo = () => {
             src={EMBED_SRC}
             title="Fall Risk Assessment overview"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            /* YouTube identifies the embedding site from the Referer header.
+               Without this the player can refuse to load with "Error 153". */
+            referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           />
         ) : (
@@ -51,7 +55,11 @@ const FraVideo = () => {
       </VideoFrame>
 
       <VideoCaption>
-        Plays muted automatically — use the player controls for sound.
+        Plays muted automatically — use the player controls for sound.{" "}
+        <a href={WATCH_URL} target="_blank" rel="noopener noreferrer">
+          Watch on YouTube
+        </a>
+        .
       </VideoCaption>
     </Section>
   );
