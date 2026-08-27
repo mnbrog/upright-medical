@@ -159,7 +159,7 @@ const InkWellHealthPage = () => (
       <Section id="exercises">
         <SectionTitle>Integrated Home Exercises for All Body Areas</SectionTitle>
         <LeadParagraph style={{ textAlign: "center" }}>
-          Leveraging the same workflow and a combined smartphone app — Inkwell Health &amp; ptMantra combined.
+          Leveraging the same workflow and a combined smartphone app: Inkwell Health &amp; ptMantra combined.
         </LeadParagraph>
         <FeatureGrid>
           <FeatureCard>
@@ -313,12 +313,12 @@ const InkWellHealthPage = () => (
         <SectionTitle>Value of Inkwell &amp; Patient Engagement</SectionTitle>
         <LeadParagraph style={{ textAlign: "center" }}>Leveraging Inkwell's Data to meet your needs!</LeadParagraph>
         <BulletList>
-          <li>RTM Revenue — Leverage Existing Reimbursement Codes</li>
-          <li>Value Based Models — Now Include PT</li>
-          <li>Prevention: MUA / ED Visit / SSI — Swelling and Temperature</li>
+          <li>RTM Revenue: Leverage Existing Reimbursement Codes</li>
+          <li>Value Based Models: Now Include PT</li>
+          <li>Prevention: MUA / ED Visit / SSI via Swelling and Temperature</li>
           <li>Patient Satisfaction / Proms / MIPS</li>
-          <li>Help Clinics Manage Follow Up — Manage Visits during Global; See more New Patients</li>
-          <li>Optimize Recovery — Personalize Recovery; Track Progress Remotely</li>
+          <li>Help Clinics Manage Follow Up: Manage Visits during Global; See more New Patients</li>
+          <li>Optimize Recovery: Personalize Recovery; Track Progress Remotely</li>
         </BulletList>
       </Section>
 
