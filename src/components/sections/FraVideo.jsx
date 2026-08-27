@@ -32,15 +32,16 @@ const FraVideo = () => {
     <Section id="fra-video">
       <SectionTitle>See Fall Risk Assessment in Action</SectionTitle>
       <LeadParagraph style={{ textAlign: "center", maxWidth: "800px", margin: "0 auto 3rem auto" }}>
-        A short look at how the FRA program works in practice — from screening to a
-        customized plan of care.
+        A short look at how the FRA program predicts fall risk, improves patient
+        care, and strengthens practice performance.
       </LeadParagraph>
 
       <VideoFrame ref={ref}>
         {inView ? (
           <iframe
             src={EMBED_SRC}
-            title="Fall Risk Assessment overview"
+            title="Fall Risk Assessment | Predict Fall Risk, Improve Patient Care & Practice Performance"
+            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             /* YouTube identifies the embedding site from the Referer header.
                Without this the player can refuse to load with "Error 153". */
