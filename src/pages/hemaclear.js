@@ -282,6 +282,7 @@ const HemaClearPage = () => (
             src="https://www.youtube.com/embed/GPkDLfN99vc"
             title="HemaClear XXL Tourniquets Application"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           />
         </VideoWrapper>

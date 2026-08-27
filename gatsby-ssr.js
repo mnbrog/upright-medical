@@ -2,6 +2,14 @@ const React = require("react")
 
 exports.onRenderBody = ({ setHeadComponents, setPreBodyComponents }) => {
   setHeadComponents([
+    // YouTube identifies the embedding site from the Referer header. If the host
+    // serves a stricter Referrer-Policy the embeds fail with "Error 153", so pin
+    // the browser default explicitly.
+    <meta
+      key="referrer-policy"
+      name="referrer"
+      content="strict-origin-when-cross-origin"
+    />,
     <script
       key="gtm-script"
       dangerouslySetInnerHTML={{
