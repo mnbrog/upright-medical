@@ -1009,3 +1009,39 @@ export const VideoCaption = styled.p`
   color: ${COLORS.neutralGray};
   margin-top: 1rem;
 `;
+/* Responsive 16:9 embed used for the Fall Risk overview video.
+   Pass $aspect (e.g. "9 / 16") for vertical clips. */
+export const VideoFrame = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: ${(props) => props.$aspect || "16 / 9"};
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  background: ${COLORS.darkBlue};
+  box-shadow: 0 8px 32px rgba(10, 38, 64, 0.15);
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+`;
+
+export const VideoFramePlaceholder = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, ${COLORS.darkBlue} 0%, #123A5E 100%);
+  color: ${COLORS.teal};
+  font-size: 3rem;
+`;
