@@ -56,7 +56,7 @@ const FraVideo = () => {
       </VideoFrame>
 
       <VideoCaption>
-        Plays muted automatically — use the player controls for sound.{" "}
+        Plays muted automatically. Use the player controls for sound.{" "}
         <a href={WATCH_URL} target="_blank" rel="noopener noreferrer">
           Watch on YouTube
         </a>
